@@ -1,27 +1,112 @@
+"use client"
 import React from 'react'
 import Sidenav from '../components/Sidenav'
 import { Typography } from '@mui/material'
- 
+import { PeopleAlt } from '@mui/icons-material'
+
+import { Circle } from 'rc-progress'
+import CountUp from 'react-countup';
+import dynamic from 'next/dynamic'
+
+const AreaChart=dynamic(()=>import("../analytics/charts/areaChart"),{
+  loading: ()=><p>Chart loading.........</p>
+});
+const PieChart=dynamic(()=>import("../analytics/charts/pieChart"),{
+  loading: ()=><p>Chart loading.........</p>
+});
 
 const Dashboard = () => {
   return (
     <Sidenav  >
-        <>
-         <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        </>
+      <>
+        <div className='grid grid-cols-4 gap-4'>
+          <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+            <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+              <div className='flex justify-between'>
+                <div className='ml-5 mt-5'>
+                  <PeopleAlt fontSize='large' />
+                </div>
+                <div className='mr-7 mt-5 roundProgress'>
+                  {/* <h2>Progress</h2> */}
+                  <Circle percent={70} strokeWidth={10} trailWidth={8} strokeColor="rgb(2, 132, 190)" />
+                </div>
+              </div>
+              <div className='pl-5 py-5'>
+                <div className='text-blue-600 font-semibold'>Total users</div>
+                <div className='text-3xl font-semibold'>
+                  <CountUp start={0} end={100} delay={1} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+            <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+              <div className='flex justify-between'>
+                <div className='ml-5 mt-5'>
+                  <PeopleAlt fontSize='large' />
+                </div>
+                <div className='mr-7 mt-5 roundProgress'>
+                  {/* <h2>Progress</h2> */}
+                  <Circle percent={70} strokeWidth={10} trailWidth={8} strokeColor="rgb(2, 132, 190)" />
+                </div>
+              </div>
+              <div className='pl-5 py-5'>
+                <div className='text-blue-600 font-semibold'>Total users</div>
+                <div className='text-3xl font-semibold'>
+                  <CountUp start={0} end={100} delay={1} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+            <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+              <div className='flex justify-between'>
+                <div className='ml-5 mt-5'>
+                  <PeopleAlt fontSize='large' />
+                </div>
+                <div className='mr-7 mt-5 roundProgress'>
+                  {/* <h2>Progress</h2> */}
+                  <Circle percent={70} strokeWidth={10} trailWidth={8} strokeColor="rgb(2, 132, 190)" />
+                </div>
+              </div>
+              <div className='pl-5 py-5'>
+                <div className='text-blue-600 font-semibold'>Total users</div>
+                <div className='text-3xl font-semibold'>
+                  <CountUp start={0} end={100} delay={1} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+            <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+              <div className='flex justify-between'>
+                <div className='ml-5 mt-5'>
+                  <PeopleAlt fontSize='large' />
+                </div>
+                <div className='mr-7 mt-5 roundProgress'>
+                  {/* <h2>Progress</h2> */}
+                  <Circle percent={70} strokeWidth={10} trailWidth={8} strokeColor="rgb(2, 132, 190)" />
+                </div>
+              </div>
+              <div className='pl-5 py-5'>
+                <div className='text-blue-600 font-semibold'>Total users</div>
+                <div className='text-3xl font-semibold'>
+                  <CountUp start={0} end={100} delay={1} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='grid grid-cols-12 gap-4 my-8'>
+          <div className='col-span-5 rounded-lg shadow px-4 py-4 bg-white'>
+            <AreaChart />
+          </div>
+          <div className='col-span-7 rounded-lg shadow px-4 py-4 bg-white'>
+            <PieChart />
+
+          </div>
+        </div>
+      </>
     </Sidenav>
   )
 }

@@ -18,8 +18,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Collapse } from '@mui/material';
-import { Dashboard, ExpandLess, ExpandMore } from '@mui/icons-material';
-import Image from 'next/image';
+import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Chat, Dashboard, ExpandLess, ExpandMore, Person,  Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded } from '@mui/icons-material';
+import Image from 'next/image'; 
+import LogoutIcon from '@mui/icons-material/Logout';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
@@ -28,8 +30,8 @@ const drawerWidth = 240;
 function Sidenav(props) {
   const { window } = props;
   const { children } = props;
-const router=useRouter()
-const pathname=usePathname()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -50,66 +52,71 @@ const pathname=usePathname()
     }
   };
   const handleCollapse = () => {
-    
-      setIsCollapse(!isCollapse);
-     
-  };
 
+    setIsCollapse(!isCollapse);
+
+  };
+  const text1 = "s"
   const drawer = (
     <div>
       <Toolbar>
-        <Image src={"/vercel.svg"} height={45} width={45} alt='logo' className='ml-2 mr-2' />
-      <Typography variant="h6" noWrap component="div">
-         Lybley CRM
-          </Typography>
+        <Image src={"/logo.png"} height={40} width={60} alt='logo' className='ml-2    rounded-lg' />
+
       </Toolbar>
       <Divider />
       <List>
-        {['Dashboard', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Dashboard', 'Analytics', 'Brand', 'User', 'Product', 'Complaints', 'Accounts', 'Reports', 'Settings', 'Chat'].map((text, index) => (
           <ListItem key={text} disablePadding
-          onClick={()=>{router.push("/" +text.toLocaleLowerCase())}}
-          className={pathname.startsWith("/" +text.toLocaleLowerCase())? "bg-[#f1f5f9] text-sky-600":"text-slate-700"}
+            onClick={() => { router.push("/" + text.toLocaleLowerCase()) }}
+            className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}
           >
             <ListItemButton>
-              <ListItemIcon  className={pathname.startsWith("/" +text.toLocaleLowerCase())? "bg-[#f1f5f9] text-sky-600":"text-slate-700"}>
-                {index   === 0 && <Dashboard /> }
-                {index   === 1 && <InboxIcon /> }
-                {index   === 2 && <InboxIcon /> }
-                {index   === 3 && <InboxIcon /> }
-                {index   === 4 && <InboxIcon /> }
-               
+              <ListItemIcon className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+                {index === 0 && <Dashboard />}
+                {index === 1 && <Analytics />}
+                {index === 2 && <BrandingWatermark />}
+                {index === 3 && <AccountCircle />}
+                {index === 4 && <Person />}
+                {index === 5 && <Person />}
+                {index === 6 && <AccountBalance />}
+                {index === 7 && <Report />}
+                {index === 8 && <Settings />}
+                {index === 9 && <Chat />}
+
+
+
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      
-        
-          <ListItem   disablePadding onClick={handleCollapse}>
-            <ListItemButton>
-              <ListItemIcon>
-                 <MailIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Support"} />
-              {isCollapse ? <ExpandLess />  : <ExpandMore />}
-            </ListItemButton>
-          </ListItem>
-        
+
+
+      <ListItem disablePadding onClick={handleCollapse} className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+        <ListItemButton>
+          <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+            <Support />
+          </ListItemIcon>
+          <ListItemText primary={"Support"} />
+          {isCollapse ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+      </ListItem>
+
       <Divider />
       <Collapse in={isCollapse} timeout={"auto"} unmountOnExit >
-      <List className='ml-4'>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+        <List className='ml-4'>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <SupportAgent /> : <SupportAgent />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </Collapse>
     </div>
   );
@@ -125,8 +132,8 @@ const pathname=usePathname()
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          bgcolor:"#ffffff",
-          color:"#2F2F2F"
+          bgcolor: "#ffffff",
+          color: "#2F2F2F"
         }}
       >
         <Toolbar>
@@ -139,9 +146,16 @@ const pathname=usePathname()
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-          Dashboard
-          </Typography>
+          <div className='w-full flex justify-between'>
+            <Typography variant="h6" noWrap component="div">
+              Dashboard
+            </Typography>
+            <div className='text-red-400  rounded-md'>
+              
+            <ExitToAppIcon   />
+           
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
       <Box
@@ -194,7 +208,7 @@ Sidenav.propTypes = {
    * Remove this when copying and pasting into your project.
    */
   window: PropTypes.func,
-  children:PropTypes.array,
+  children: PropTypes.array,
 };
 
 export default Sidenav;
