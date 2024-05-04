@@ -71,7 +71,7 @@ function Sidenav(props) {
             className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}
           >
             <ListItemButton>
-              <ListItemIcon className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <ListItemIcon className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9]  text-sky-600" : "text-slate-700"}>
                 {index === 0 && <Dashboard />}
                 {index === 1 && <Analytics />}
                 {index === 2 && <BrandingWatermark />}
@@ -147,12 +147,12 @@ function Sidenav(props) {
             <MenuIcon />
           </IconButton>
           <div className='w-full flex justify-between'>
-            <Typography variant="h6" noWrap component="div">
+            <div  className='font-bold text-2xl'  >
               Dashboard
-            </Typography>
-            <div className='text-red-400  rounded-md'>
-              
-            <ExitToAppIcon   />
+            </div>
+            <div className='text-red-400 font-semibold cursor-pointer rounded-md'>
+              Logout
+            <ExitToAppIcon  className='ml-2' />
            
             </div>
           </div>

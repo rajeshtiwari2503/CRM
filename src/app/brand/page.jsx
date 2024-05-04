@@ -6,7 +6,6 @@ const Brand = () => {
   return (
    <Sidenav>
     <>
-    <div className="mb-2 font-bold text-xl" >Brand</div>
     <BrandList />
     </>
    </Sidenav>
