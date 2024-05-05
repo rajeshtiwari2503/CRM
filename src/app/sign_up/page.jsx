@@ -17,7 +17,7 @@ const RegiterAdmin=async(reqdata)=>{
   try{
     setLoading(true)
     const postObj={...reqdata,role:"ADMIN"}
-    console.log(postObj);
+    
     let response=await http_request.post('/registration',postObj)
     const {data}=response
     ToastMessage(data)
@@ -42,6 +42,7 @@ const RegiterAdmin=async(reqdata)=>{
   
   return (
     <>
+    <Toaster />
       <div className="flex justify-center mt-4">
         <div style={{ minWidth: "30%" }}>
           <div className="shadow-lg flex min-h-full flex-1 flex-col justify-center px-6 py-4 lg:px-8">
@@ -171,7 +172,7 @@ const RegiterAdmin=async(reqdata)=>{
           </div>
         </div>
       </div>
-      <Toaster />
+   
     </>
   );
 }

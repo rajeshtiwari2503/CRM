@@ -56,11 +56,19 @@ function Sidenav(props) {
     setIsCollapse(!isCollapse);
 
   };
+
+
+const handleLogout=()=>{
+  router.push("/sign_in")
+}
+
+
+
   const text1 = "s"
   const drawer = (
     <div>
       <Toolbar>
-        <Image src={"/logo.png"} height={40} width={60} alt='logo' className='ml-2    rounded-lg' />
+        <Image src={"/logo.png"} height={40} width={60} alt='logo' className='   rounded-lg' />
 
       </Toolbar>
       <Divider />
@@ -68,7 +76,7 @@ function Sidenav(props) {
         {['Dashboard', 'Analytics', 'Brand', 'User', 'Product', 'Complaints', 'Accounts', 'Reports', 'Settings', 'Chat'].map((text, index) => (
           <ListItem key={text} disablePadding
             onClick={() => { router.push("/" + text.toLocaleLowerCase()) }}
-            className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}
+            className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600  pl-2" : "text-slate-700 pl-2"}
           >
             <ListItemButton>
               <ListItemIcon className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9]  text-sky-600" : "text-slate-700"}>
@@ -93,7 +101,7 @@ function Sidenav(props) {
       </List>
 
 
-      <ListItem disablePadding onClick={handleCollapse} className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+      <ListItem disablePadding onClick={handleCollapse} className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
         <ListItemButton>
           <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
             <Support />
@@ -150,7 +158,7 @@ function Sidenav(props) {
             <div  className='font-bold text-2xl'  >
               Dashboard
             </div>
-            <div className='text-red-400 font-semibold cursor-pointer rounded-md'>
+            <div onClick={handleLogout} className='text-red-400 font-semibold cursor-pointer rounded-md'>
               Logout
             <ExitToAppIcon  className='ml-2' />
            
