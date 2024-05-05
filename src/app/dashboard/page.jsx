@@ -2,13 +2,15 @@
 import React from 'react'
 import Sidenav from '../components/Sidenav'
 import AdminDashboard from './adminDashboard'
+import BrandDashboard from './brandDashboard'
 
 
 const Dashboard = () => {
   return (
     <Sidenav  >
       <>
-       <AdminDashboard />
+       {/* <AdminDashboard /> */}
+       <BrandDashboard />
       </>
     </Sidenav>
   )

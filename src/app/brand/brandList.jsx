@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
-import { Add } from '@mui/icons-material';
+import { Add,   Visibility } from '@mui/icons-material';
 
 const initialData = [
   { id: 1, name: 'John Doe', email: 'john@example.com' },
@@ -117,7 +117,9 @@ const BrandList = () => {
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>
-
+                <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>
+                    <Visibility color='primary'/>
+                  </IconButton>
                   <IconButton aria-label="edit" onClick={() => handleEditModalOpen(row)}>
                     <EditIcon color='success'/>
                   </IconButton>

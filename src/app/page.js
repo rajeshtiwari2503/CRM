@@ -15,7 +15,7 @@ export default function Home() {
       {/* <SignIn /> */}
        
      <Dashboard />
-     <Toaster />
+    
     </main>
   )
 }
