@@ -16,9 +16,8 @@ const [loading,setLoading]=useState(false)
 const RegiterAdmin=async(reqdata)=>{
   try{
     setLoading(true)
-    const postObj={...reqdata,role:"ADMIN"}
     
-    let response=await http_request.post('/registration',postObj)
+    let response=await http_request.post('/registration',reqdata)
     const {data}=response
     ToastMessage(data)
     setLoading(false)

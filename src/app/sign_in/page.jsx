@@ -24,7 +24,7 @@ const Login=async(reqdata)=>{
     let response=await http_request.post('/login',reqdata)
     console.log(response);
     const {data}=response
-    console.log(data);
+    localStorage.setItem('user', JSON.stringify(data));
     ToastMessage(data)
     setLoading(false)
      router.push("/dashboard")
