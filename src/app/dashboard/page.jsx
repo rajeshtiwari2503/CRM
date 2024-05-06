@@ -9,8 +9,8 @@ const Dashboard = () => {
   return (
     <Sidenav  >
       <>
-       {/* <AdminDashboard /> */}
-       <BrandDashboard />
+       <AdminDashboard />
+       {/* <BrandDashboard /> */}
       </>
     </Sidenav>
   )
