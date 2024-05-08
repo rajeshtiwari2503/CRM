@@ -18,8 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Collapse } from '@mui/material';
-import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Chat, Dashboard, ExpandLess, ExpandMore, Person,  Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded } from '@mui/icons-material';
-import Image from 'next/image'; 
+import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Chat, Dashboard, ExpandLess, ExpandMore, Inventory, Person, Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded, Warning } from '@mui/icons-material';
+import Image from 'next/image';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useRouter } from 'next/navigation';
@@ -28,6 +28,7 @@ import { usePathname } from 'next/navigation';
 const drawerWidth = 240;
 
 function Sidenav(props) {
+
   const { window } = props;
   const { children } = props;
   const router = useRouter()
@@ -36,6 +37,19 @@ function Sidenav(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [isCollapse, setIsCollapse] = React.useState(false);
+
+
+  const [value, setValue] = React.useState(null);
+
+  React.useEffect(() => {
+    const storedValue = localStorage.getItem("user");
+    if (storedValue) {
+      setValue(JSON.parse(storedValue));
+    }
+  }, []);
+
+
+
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -58,74 +72,166 @@ function Sidenav(props) {
   };
 
 
-const handleLogout=()=>{
-  router.push("/sign_in")
-}
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    router.push("/sign_in")
+  }
 
 
 
   const text1 = "s"
   const drawer = (
     <div>
-      <Toolbar>
-        <Image src={"/logo.png"} height={40} width={60} alt='logo' className='   rounded-lg' />
-
+      <Toolbar sx={{display:"flex",justifyContent:"space-between"}}>   
+          <div>
+            <Image src={"/logo.png"} height={40} width={60} alt='logo' className='rounded-lg' />
+          </div>
+          <div className='font-bold text-xl'>
+            {value?.user?.role}
+          </div>
       </Toolbar>
       <Divider />
-      <List>
-        {['Dashboard', 'Analytics', 'Brand', 'User', 'Product', 'Complaints', 'Accounts', 'Reports', 'Settings', 'Chat'].map((text, index) => (
-          <ListItem key={text} disablePadding
-            onClick={() => { router.push("/" + text.toLocaleLowerCase()) }}
-            className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600  pl-2" : "text-slate-700 pl-2"}
-          >
-            <ListItemButton>
-              <ListItemIcon className={pathname.startsWith("/" + text.toLocaleLowerCase()) ? "bg-[#f1f5f9]  text-sky-600" : "text-slate-700"}>
-                {index === 0 && <Dashboard />}
-                {index === 1 && <Analytics />}
-                {index === 2 && <BrandingWatermark />}
-                {index === 3 && <AccountCircle />}
-                {index === 4 && <Person />}
-                {index === 5 && <Person />}
-                {index === 6 && <AccountBalance />}
-                {index === 7 && <Report />}
-                {index === 8 && <Settings />}
-                {index === 9 && <Chat />}
 
-
-
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-
-
-      <ListItem disablePadding onClick={handleCollapse} className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+      <ListItem disablePadding onClick={() => { router.push("/dashboard") }} className={pathname.startsWith("/dashboard") ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
         <ListItemButton>
-          <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
-            <Support />
+          <ListItemIcon className={pathname.startsWith("/dashboard") ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+            <Dashboard />
           </ListItemIcon>
-          <ListItemText primary={"Support"} />
-          {isCollapse ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText primary={"Dashboard"} />
+          {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
         </ListItemButton>
       </ListItem>
-
-      <Divider />
-      <Collapse in={isCollapse} timeout={"auto"} unmountOnExit >
-        <List className='ml-4'>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <SupportAgent /> : <SupportAgent />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Collapse>
+      {value?.user?.role === "ADMIN"
+        ? <ListItem disablePadding onClick={() => { router.push("/analytics") }} className={pathname.startsWith("/analytics") ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/analytics") ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Analytics />
+            </ListItemIcon>
+            <ListItemText primary={"Analytics"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN"
+        ? <ListItem disablePadding onClick={() => { router.push("/brand") }} className={pathname.startsWith("/brand") ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/brand") ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <BrandingWatermark />
+            </ListItemIcon>
+            <ListItemText primary={"Brands"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""
+      }
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Person />
+            </ListItemIcon>
+            <ListItemText primary={"Users"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <AccountBalance />
+            </ListItemIcon>
+            <ListItemText primary={"Products"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Warning />
+            </ListItemIcon>
+            <ListItemText primary={"Complaints"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <AccountBalance />
+            </ListItemIcon>
+            <ListItemText primary={"Account"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Report />
+            </ListItemIcon>
+            <ListItemText primary={"Report"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Inventory />
+            </ListItemIcon>
+            <ListItemText primary={"Inventory"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN"
+        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Chat />
+            </ListItemIcon>
+            <ListItemText primary={"Chat"} />
+            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN"
+        ? <ListItem disablePadding onClick={handleCollapse} className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+          <ListItemButton>
+            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+              <Support />
+            </ListItemIcon>
+            <ListItemText primary={"Support"} />
+            {isCollapse ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+        </ListItem>
+        : ""}
+      {value?.user?.role === "ADMIN"
+        ?
+        <>
+          <Divider />
+          <Collapse in={isCollapse} timeout={"auto"} unmountOnExit >
+            <List className='ml-4'>
+              {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                <ListItem key={text} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      {index % 2 === 0 ? <SupportAgent /> : <SupportAgent />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+        </>
+        : ""}
     </div>
   );
 
@@ -155,13 +261,13 @@ const handleLogout=()=>{
             <MenuIcon />
           </IconButton>
           <div className='w-full flex justify-between'>
-            <div  className='font-bold text-2xl'  >
+            <div className='font-bold text-2xl'  >
               Dashboard
             </div>
             <div onClick={handleLogout} className='text-red-400 font-semibold cursor-pointer rounded-md'>
               Logout
-            <ExitToAppIcon  className='ml-2' />
-           
+              <ExitToAppIcon className='ml-2' />
+
             </div>
           </div>
         </Toolbar>

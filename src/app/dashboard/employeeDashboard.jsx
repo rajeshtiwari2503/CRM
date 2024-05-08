@@ -12,7 +12,7 @@ const AreaChart=dynamic(()=>import("../analytics/charts/areaChart"),{
   const PieChart=dynamic(()=>import("../analytics/charts/pieChart"),{
     loading: ()=><p>Chart loading.........</p>
   });
-const BrandDashboard = () => {
+const  EmployeeDashboard = () => {
   return (
     <>
     <div className='grid grid-cols-4 gap-4'>
@@ -106,4 +106,4 @@ const BrandDashboard = () => {
   )
 }
 
-export default BrandDashboard
+export default  EmployeeDashboard

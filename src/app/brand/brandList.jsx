@@ -4,23 +4,17 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
-import { Add,   Visibility } from '@mui/icons-material';
+import { Add, Visibility } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 
-const initialData = [
-  { id: 1, name: 'John Doe', email: 'john@example.com' },
-  { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
-  { id: 3, name: 'Alice Smith', email: 'alice@example.com' },
-  { id: 4, name: 'Bob Johnson', email: 'bob@example.com' },
-  { id: 5, name: 'Eve Anderson', email: 'eve@example.com' },
-  { id: 6, name: 'Charlie Brown', email: 'charlie@example.com' },
-  { id: 7, name: 'David Miller', email: 'david@example.com' },
-  { id: 8, name: 'Grace Wilson', email: 'grace@example.com' },
-  { id: 9, name: 'Michael Clark', email: 'michael@example.com' },
-  { id: 10, name: 'Sarah Taylor', email: 'sarah@example.com' },
-];
 
-const BrandList = () => {
-  const [data, setData] = useState(initialData);
+
+const BrandList = (props) => {
+
+
+  const router = useRouter()
+
+  const data =  props?.data;
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({ id: '', name: '', email: '' });
   const [page, setPage] = useState(0);
@@ -42,7 +36,7 @@ const BrandList = () => {
     setSortDirection(isAsc ? 'desc' : 'asc');
     setSortBy(property);
   };
-
+ 
   const sortedData = stableSort(data, getComparator(sortDirection, sortBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   const handleEditModalOpen = (rowData) => {
@@ -66,12 +60,16 @@ const BrandList = () => {
     setData(updatedData);
   };
 
+  const handleAdd = () => {
+    router.push("/brand/add")
+  }
+
   return (
     <div>
       <div className='flex justify-between items-center mb-3'>
         <div className='font-bold text-2xl'>Brand Information</div>
-        <div className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '> 
-        <Add style={{color:"white"}}/>
+        <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
+          <Add style={{ color: "white" }} />
           <div className=' ml-2 '>Add Brand</div>
         </div>
       </div>
@@ -107,24 +105,24 @@ const BrandList = () => {
                 </TableSortLabel>
               </TableCell>
               <TableCell>Actions</TableCell>
-               
+
             </TableRow>
           </TableHead>
           <TableBody>
             {sortedData.map((row) => (
-              <TableRow key={row.id} hover>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.email}</TableCell>
+              <TableRow key={row?.i} hover>
+                <TableCell>{row?.i}</TableCell>
+                <TableCell>{row?.name}</TableCell>
+                <TableCell>{row?.email}</TableCell>
                 <TableCell>
-                <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>
-                    <Visibility color='primary'/>
+                  <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>
+                    <Visibility color='primary' />
                   </IconButton>
                   <IconButton aria-label="edit" onClick={() => handleEditModalOpen(row)}>
-                    <EditIcon color='success'/>
+                    <EditIcon color='success' />
                   </IconButton>
                   <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
-                    <DeleteIcon color='error'/>
+                    <DeleteIcon color='error' />
                   </IconButton>
                 </TableCell>
               </TableRow>
