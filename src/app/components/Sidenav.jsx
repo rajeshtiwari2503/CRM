@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Collapse } from '@mui/material';
-import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Chat, Dashboard, ExpandLess, ExpandMore, Person, Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded } from '@mui/icons-material';
+import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Chat, Dashboard, ExpandLess, ExpandMore, Inventory, Person, Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded, Warning } from '@mui/icons-material';
 import Image from 'next/image';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -82,13 +82,13 @@ function Sidenav(props) {
   const text1 = "s"
   const drawer = (
     <div>
-      <Toolbar>
-        <div className='flex justify-between items-center'>
+      <Toolbar sx={{display:"flex",justifyContent:"space-between"}}>   
           <div>
-          <Image src={"/logo.png"} height={40} width={60} alt='logo' className='   rounded-lg' />
+            <Image src={"/logo.png"} height={40} width={60} alt='logo' className='rounded-lg' />
           </div>
-        <div className='font-bold text-xl pl-4'>{value?.user?.role}</div>
-        </div>
+          <div className='font-bold text-xl'>
+            {value?.user?.role}
+          </div>
       </Toolbar>
       <Divider />
 
@@ -135,7 +135,7 @@ function Sidenav(props) {
           </ListItemButton>
         </ListItem>
         : ""}
-      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE"
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
             <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
@@ -146,18 +146,18 @@ function Sidenav(props) {
           </ListItemButton>
         </ListItem>
         : ""}
-      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE"
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
             <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
-              <AccountBalance />
+              <Warning />
             </ListItemIcon>
             <ListItemText primary={"Complaints"} />
             {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
           </ListItemButton>
         </ListItem>
         : ""}
-      {value?.user?.role === "ADMIN" || value?.user?.role === "EMPLOYEE"
+      {value?.user?.role === "ADMIN" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
             <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
@@ -168,7 +168,7 @@ function Sidenav(props) {
           </ListItemButton>
         </ListItem>
         : ""}
-      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE"
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
             <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
@@ -179,11 +179,11 @@ function Sidenav(props) {
           </ListItemButton>
         </ListItem>
         : ""}
-      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE"
+      {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
             <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
-              <Settings />
+              <Inventory />
             </ListItemIcon>
             <ListItemText primary={"Inventory"} />
             {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}

@@ -15,8 +15,78 @@ const PieChart = dynamic(() => import("../analytics/charts/pieChart"), {
 const AdminDashboard = () => {
   return (
     <>
+      <div className='grid md:grid-cols-4 sm:grid-cols-1 gap-4 mb-5'>
+        <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+          <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+            <div className='flex justify-between'>
+            </div>
+            <div className='pl-5 py-3 flex justify-between items-center'>
+              <div className='flex items-center'>
+                <PeopleAlt fontSize='large' />
+                <div className='ml-2'>
+                  <div className='text-blue-600 font-semibold'>Users</div>
+                  <div className='text-3xl font-semibold'>
+                    <CountUp start={0} end={100} delay={1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+          <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+            <div className='flex justify-between'>
+            </div>
+            <div className='pl-5 py-3 flex justify-between items-center'>
+              <div className='flex items-center'>
+                <PeopleAlt fontSize='large' />
+                <div className='ml-2'>
+                  <div className='text-blue-600 font-semibold'>Brands</div>
+                  <div className='text-3xl font-semibold'>
+                    <CountUp start={0} end={100} delay={1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+          <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+            <div className='flex justify-between'>
+            </div>
+            <div className='pl-5 py-3 flex justify-between items-center'>
+              <div className='flex items-center'>
+                <PeopleAlt fontSize='large' />
+                <div className='ml-2'>
+                  <div className='text-blue-600 font-semibold'>Employees</div>
+                  <div className='text-3xl font-semibold'>
+                    <CountUp start={0} end={100} delay={1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
+          <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
+            <div className='flex justify-between'>
+            </div>
+            <div className='pl-5 py-3 flex justify-between items-center'>
+              <div className='flex items-center'>
+                <PeopleAlt fontSize='large' />
+                <div className='ml-2'>
+                  <div className='text-blue-600 font-semibold'>Service Centers</div>
+                  <div className='text-3xl font-semibold'>
+                    <CountUp start={0} end={100} delay={1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className='h-10 rounded-md flex items-center pl-5 bg-sky-200 text-1xl font-bold mb-3'>Complaints</div>
-      <div className='grid grid-cols-4 gap-4'>
+      <div className='grid md:grid-cols-4 sm:grid-cols-1 gap-4'>
         <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
           <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
             <div className='flex justify-between'>
@@ -68,12 +138,12 @@ const AdminDashboard = () => {
             </div>
             <div className='pl-5 py-3 flex justify-between items-center'>
               <div className='flex items-center'>
-              <PeopleAlt fontSize='large' />
-              <div className='ml-2'>
-                <div className='text-blue-600 font-semibold'>In Progress</div>
-                <div className='text-3xl font-semibold'>
-                  <CountUp start={0} end={100} delay={1} />
-                </div>
+                <PeopleAlt fontSize='large' />
+                <div className='ml-2'>
+                  <div className='text-blue-600 font-semibold'>In Progress</div>
+                  <div className='text-3xl font-semibold'>
+                    <CountUp start={0} end={100} delay={1} />
+                  </div>
                 </div>
               </div>
               <div className='mr-7   roundProgress'>
@@ -81,7 +151,7 @@ const AdminDashboard = () => {
               </div>
             </div>
           </div>
-         
+
         </div>
         <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
           <div className='mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transi duration-150'>
