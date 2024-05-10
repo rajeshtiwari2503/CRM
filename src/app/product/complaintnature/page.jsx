@@ -6,10 +6,11 @@ import ComplaintNatureList from './complaintNatureList'
 
 const ComplaintNature = () => {
     const [complaintNature, setComplaintNature] = useState([])
+    const [refresh, setRefresh] = useState("")
 
     useEffect(() => {
       getAllComplaintNature()
-    }, [])
+    }, [refresh])
   
     const getAllComplaintNature = async () => {
       let response = await http_request.get("/getAllComplaintNature")
@@ -19,12 +20,14 @@ const ComplaintNature = () => {
     }
   
     const data = complaintNature?.map((item, index) => ({ ...item, i: index + 1}));
-
+    const RefreshData = (data) => {
+      setRefresh(data)
+    }
     return (
         <>
             <Sidenav>
                
-                <ComplaintNatureList data={data}/>
+                <ComplaintNatureList data={data}RefreshData={RefreshData}/>
             </Sidenav>
         </>
     )
