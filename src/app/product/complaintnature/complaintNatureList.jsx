@@ -76,7 +76,7 @@ const  ComplaintNatureList   = (props) => {
         <div className='font-bold text-2xl'>Complaint Nature Information</div>
         <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
           <Add style={{ color: "white" }} />
-          <div className=' ml-2 '>Add Product</div>
+          <div className=' ml-2 '>Add Nature</div>
         </div>
       </div>
       <TableContainer component={Paper}>
@@ -170,7 +170,7 @@ const  ComplaintNatureList   = (props) => {
       {/* Edit Modal */}
        {/* Edit Modal */}
       <Dialog open={editModalOpen} onClose={handleEditModalClose}>
-        <DialogTitle>{editData?._id?"Edit Category" :"Add Category"}</DialogTitle>
+        <DialogTitle>{editData?._id?"Edit Complaint Nature" :"Add Complaint Nature"}</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleEditModalClose}

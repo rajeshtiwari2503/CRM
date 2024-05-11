@@ -1,3 +1,4 @@
+
 "use client"
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal, TextField, TablePagination, TableSortLabel, IconButton, Dialog, DialogContent, DialogActions, DialogTitle } from '@mui/material';
@@ -6,17 +7,23 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import { Add, Visibility } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
+import { ConfirmBox } from '@/app/components/common/ConfirmBox';
+import http_request from '.././../../http-request'
+import { Toaster } from 'react-hot-toast';
+import { ToastMessage } from '@/app/components/common/Toastify';
 
+import AddProduct from './addProduct';
 
-
-const ProductList   = (props) => {
+const ProductList = (props) => {
 
 
   const router = useRouter()
 
-  const data =  props?.data;
+  const data = props?.data;
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [editData, setEditData] = useState({ id: '', name: '', email: '' });
+  const [confirmBoxView, setConfirmBoxView] = useState(false);
+  const [cateId, setCateId] = useState("");
+  const [editData, setEditData] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortDirection, setSortDirection] = useState('asc');
@@ -36,36 +43,39 @@ const ProductList   = (props) => {
     setSortDirection(isAsc ? 'desc' : 'asc');
     setSortBy(property);
   };
- 
+
   const sortedData = stableSort(data, getComparator(sortDirection, sortBy))?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  const handleEditModalOpen = (rowData) => {
-    setEditData(rowData);
-    setEditModalOpen(true);
-  };
+
 
   const handleEditModalClose = () => {
     setEditModalOpen(false);
   };
 
-  const handleEdit = () => {
-    // Handle editing logic here
-    console.log('Edit:', editData);
-    handleEditModalClose();
-  };
 
+  const handleAdd = (row) => {
+    setEditData(row)
+    setEditModalOpen(true);
+  }
+  const deleteData = async () => {
+    try {
+      let response = await http_request.deleteData(`/deleteProduct/${cateId}`);
+      let { data } = response;
+      setConfirmBoxView(false);
+      props?.RefreshData(data)
+      ToastMessage(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   const handleDelete = (id) => {
-    // Handle delete logic here
-    const updatedData = data?.filter((item) => item.id !== id);
-    setData(updatedData);
-  };
-
-  const handleAdd = () => {
-    router.push("/brand/add")
+    setCateId(id)
+    setConfirmBoxView(true);
   }
 
   return (
     <div>
+      <Toaster />
       <div className='flex justify-between items-center mb-3'>
         <div className='font-bold text-2xl'>Product Information</div>
         <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
@@ -92,7 +102,7 @@ const ProductList   = (props) => {
                   direction={sortDirection}
                   onClick={() => handleSort('name')}
                 >
-                Product Name
+                  Product
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -101,7 +111,7 @@ const ProductList   = (props) => {
                   direction={sortDirection}
                   onClick={() => handleSort('brandName')}
                 >
-               Brand Name
+                  Brand Name
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -119,13 +129,14 @@ const ProductList   = (props) => {
                   direction={sortDirection}
                   onClick={() => handleSort('createdAt')}
                 >
-                 CreatedAt
+                  CreatedAt
                 </TableSortLabel>
               </TableCell>
               <TableCell>Actions</TableCell>
 
             </TableRow>
           </TableHead>
+
           <TableBody>
             {sortedData?.map((row) => (
               <TableRow key={row?.i} hover>
@@ -135,13 +146,13 @@ const ProductList   = (props) => {
                 <TableCell>{row?.status}</TableCell>
                 <TableCell>{new Date(row?.createdAt)?.toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>
+                  <IconButton aria-label="view"  >
                     <Visibility color='primary' />
                   </IconButton>
-                  <IconButton aria-label="edit" onClick={() => handleEditModalOpen(row)}>
+                  <IconButton aria-label="edit" onClick={() => handleAdd(row)}>
                     <EditIcon color='success' />
                   </IconButton>
-                  <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
+                  <IconButton aria-label="delete" onClick={() => handleDelete(row._id)}>
                     <DeleteIcon color='error' />
                   </IconButton>
                 </TableCell>
@@ -163,7 +174,7 @@ const ProductList   = (props) => {
 
       {/* Edit Modal */}
       <Dialog open={editModalOpen} onClose={handleEditModalClose}>
-        <DialogTitle>Edit Data</DialogTitle>
+        <DialogTitle>{editData?._id ? "Edit Product" : "Add Product"}</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleEditModalClose}
@@ -177,19 +188,19 @@ const ProductList   = (props) => {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <TextField className='mt-5' label="Name" fullWidth value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} />
-          <TextField className='mt-5' label="Email" fullWidth value={editData.email} onChange={(e) => setEditData({ ...editData, email: e.target.value })} />
+          <AddProduct existingProduct={editData} RefreshData={props?.RefreshData} onClose={handleEditModalClose} />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleEditModalClose}>Cancel</Button>
-          <Button onClick={handleEdit}>Save Changes</Button>
-        </DialogActions>
+
       </Dialog>
+
+
+      <ConfirmBox bool={confirmBoxView} setConfirmBoxView={setConfirmBoxView} onSubmit={deleteData} />
+
     </div>
   );
 };
 
-export default ProductList  ;
+export default ProductList;
 
 function stableSort(array, comparator) {
   const stabilizedThis = array?.map((el, index) => [el, index]);

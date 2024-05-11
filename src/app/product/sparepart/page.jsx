@@ -6,9 +6,12 @@ import SparepartList from './sparepartList'
 const Sparepart = () => {
     const [spareparts, setSpareparts] = useState([])
 
+    const [refresh, setRefresh] = useState("")
+
     useEffect(() => {
       getAllSpareparts()
-    }, [])
+    }, [refresh])
+  
   
     const getAllSpareparts = async () => {
       let response = await http_request.get("/getAllSparepart")
@@ -19,11 +22,15 @@ const Sparepart = () => {
   
     const data = spareparts?.map((item, index) => ({ ...item, i: index + 1}));
 
+    const RefreshData = (data) => {
+      setRefresh(data)
+    }
+
     return (
         <>
             <Sidenav>
                
-                <SparepartList data={data}/>
+                <SparepartList data={data} RefreshData={RefreshData}/>
             </Sidenav>
         </>
     )

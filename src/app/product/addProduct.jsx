@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import http_request from '../../../../http-request';
+import http_request from '../../../http-request';
 import { Button } from '@mui/material';
 import { ToastMessage } from '@/app/components/common/Toastify';
 
-const AddNature = ({ existingNature, RefreshData, onClose }) => {
+const AddProduct = ({ existingProduct, RefreshData, onClose }) => {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
 
-    const AddProductCategory = async (data) => {
+    const AddProductData  = async (data) => {
         try {
             setLoading(true);
-            const endpoint = existingNature?._id ? `/editComplaintNature/${existingNature._id}` : '/addComplaintNature';
-            const response = existingNature?._id ? await http_request.patch(endpoint, data) : await http_request.post(endpoint, data);
+            const endpoint = existingProduct?._id ? `/editProduct/${existingProduct._id}` : '/addProduct';
+            const response = existingProduct?._id ? await http_request.patch(endpoint, data) : await http_request.post(endpoint, data);
             const { data: responseData } = response;
             ToastMessage(responseData);
             setLoading(false);
@@ -27,16 +27,16 @@ const AddNature = ({ existingNature, RefreshData, onClose }) => {
     };
 
     const onSubmit = (data) => {
-        AddProductCategory(data);
+        AddProductData(data);
     };
 
     
     React.useEffect(() => {
-        if (existingNature) {
-            setValue('productName', existingNature.productName);
-            setValue('nature', existingNature.nature);
+        if (existingProduct) {
+            setValue('productName', existingProduct.productName);
+            setValue('productDescription', existingProduct.productDescription);
         }
-    }, [existingNature, setValue]);
+    }, [existingProduct, setValue]);
 
     return (
         <div>
@@ -47,8 +47,8 @@ const AddNature = ({ existingNature, RefreshData, onClose }) => {
                     </label>
                     <div className="mt-2">
                         <input
-                            id="productName"
-                            name="productName"
+                            id="categoryName"
+                            name="categoryName"
                             type="text"
                             autoComplete="off"
                             required
@@ -59,33 +59,33 @@ const AddNature = ({ existingNature, RefreshData, onClose }) => {
                     {errors.productName && <p className="text-red-500 text-sm mt-1">{errors.productName.message}</p>}
                 </div>
                 <div className=' '>
-                    <label htmlFor="nature" className="block text-sm font-medium leading-6 text-gray-900">
-                       Complaint Nature
+                    <label htmlFor="productDescription" className="block text-sm font-medium leading-6 text-gray-900">
+                        Name
                     </label>
                     <div className="mt-2">
                         <input
-                            id="nature"
-                            name="nature"
+                            id="productDescription"
+                            name="productDescription"
                             type="text"
                             autoComplete="off"
                             required
-                            {...register('nature', { required: 'nature is required', minLength: { value: 3, message: 'nature must be at least 3 characters long' } })}
-                            className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.nature ? 'border-red-500' : ''}`}
+                            {...register('productDescription', { required: 'Product Description is required', minLength: { value: 3, message: 'Product  Description must be at least 3 characters long' } })}
+                            className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.productDescription ? 'border-red-500' : ''}`}
                         />
                     </div>
-                    {errors.nature && <p className="text-red-500 text-sm mt-1">{errors.nature.message}</p>}
+                    {errors.productDescription && <p className="text-red-500 text-sm mt-1">{errors.productDescription.message}</p>}
                 </div>
                 <div className='flex justify-between mt-8'>
                     <Button variant="outlined" onClick={() => onClose(true)} className='hover:bg-[#fe3f49] hover:text-white' color="error">
                         Cancel
                     </Button>
-                    {existingNature?._id ? (
+                    {existingProduct?._id ? (
                         <Button disabled={loading} variant="outlined" className='hover:bg-[#2e7d32] hover:text-white' color="success" type="submit">
                             Update
                         </Button>
                     ) : (
                         <Button disabled={loading} variant="outlined" className='hover:bg-[#2e7d32] hover:text-white' color="success" type="submit">
-                            Add Nature
+                            Add Category
                         </Button>
                     )}
                 </div>
@@ -94,4 +94,4 @@ const AddNature = ({ existingNature, RefreshData, onClose }) => {
     );
 };
 
-export default AddNature;
+export default AddProduct;
