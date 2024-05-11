@@ -138,7 +138,7 @@ const  ComplaintNatureList   = (props) => {
                 <TableCell>{row?.i}</TableCell>
                 <TableCell>{row?.productName}</TableCell>
                 <TableCell>{row?.nature}</TableCell>
-                <TableCell>{row?.status}</TableCell>
+                {/* <TableCell>{row?.status}</TableCell> */}
                 <TableCell>{new Date(row?.createdAt)?.toLocaleDateString()}</TableCell>
                 <TableCell>
                   <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>

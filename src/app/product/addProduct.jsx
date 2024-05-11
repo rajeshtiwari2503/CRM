@@ -43,7 +43,7 @@ const AddProduct = ({ existingProduct, RefreshData, onClose }) => {
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmit)}>
                 <div className='w-[400px]'>
                     <label htmlFor="categoryName" className="block text-sm font-medium leading-6 text-gray-900">
-                        Name
+                    Product  Name
                     </label>
                     <div className="mt-2">
                         <input
@@ -60,7 +60,7 @@ const AddProduct = ({ existingProduct, RefreshData, onClose }) => {
                 </div>
                 <div className=' '>
                     <label htmlFor="productDescription" className="block text-sm font-medium leading-6 text-gray-900">
-                        Name
+                    Product Description
                     </label>
                     <div className="mt-2">
                         <input

@@ -111,7 +111,7 @@ const ProductList = (props) => {
                   direction={sortDirection}
                   onClick={() => handleSort('brandName')}
                 >
-                  Brand Name
+                  Product Description
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -142,7 +142,7 @@ const ProductList = (props) => {
               <TableRow key={row?.i} hover>
                 <TableCell>{row?.i}</TableCell>
                 <TableCell>{row?.productName}</TableCell>
-                <TableCell>{row?.brandName}</TableCell>
+                <TableCell>{row?.productDescription}</TableCell>
                 <TableCell>{row?.status}</TableCell>
                 <TableCell>{new Date(row?.createdAt)?.toLocaleDateString()}</TableCell>
                 <TableCell>
