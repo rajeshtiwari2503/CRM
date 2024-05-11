@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Collapse } from '@mui/material';
-import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Chat, Dashboard, ExpandLess, ExpandMore, Inventory, Person, Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded, Warning } from '@mui/icons-material';
+import { AccountBalance, AccountCircle, Analytics, BrandingWatermark, Category, Chat, Dashboard, ExpandLess, ExpandMore, Inventory, Logout, Person, Report, Settings, Support, SupportAgent, UsbRounded, VerifiedUserRounded, Warning } from '@mui/icons-material';
 import Image from 'next/image';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -37,6 +37,7 @@ function Sidenav(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [isCollapse, setIsCollapse] = React.useState(false);
+  const [isCollapseProduct, setIsCollapseProduct] = React.useState(false);
 
 
   const [value, setValue] = React.useState(null);
@@ -65,19 +66,23 @@ function Sidenav(props) {
       setMobileOpen(!mobileOpen);
     }
   };
+  const handleCollapseProduct = () => {
+
+    setIsCollapseProduct(!isCollapseProduct);
+
+  };
+
   const handleCollapse = () => {
 
     setIsCollapse(!isCollapse);
 
   };
-
-
   const handleLogout = () => {
     localStorage.removeItem("user")
     router.push("/sign_in")
   }
 
-
+ 
 
   const text1 = "s"
   const drawer = (
@@ -136,16 +141,36 @@ function Sidenav(props) {
         </ListItem>
         : ""}
       {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
-        ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
+        ? <ListItem onClick={handleCollapseProduct}disablePadding className={pathname.startsWith("/product"  ) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
-            <ListItemIcon className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+            <ListItemIcon className={pathname.startsWith("/product"  ) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
               <AccountBalance />
             </ListItemIcon>
             <ListItemText primary={"Products"} />
-            {/* {isCollapse ? <ExpandLess /> : <ExpandMore />} */}
+            {isCollapseProduct ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>
         : ""}
+          <Collapse in={isCollapseProduct} timeout={"auto"} unmountOnExit >
+            <List className=' '>
+              {['Category', 'Product', 'SparePart','complaintnature'].map((text, index) => (
+                <ListItem   key={text} disablePadding 
+              className={  pathname.startsWith(`/product/${text.toLowerCase()}`)  
+                ? 'bg-[#f1f5f9] text-sky-600 pl-6'  
+                : 'text-slate-700 pl-6'
+            }
+            onClick={(event) =>{text==="Product"?router.push(`/product`) :  text==="Complaint Nature"?router.push(`/product/complaintnature`) : router.push(`/product/${text.toLowerCase()}`)}}
+                >
+                  <ListItemButton>
+                    <ListItemIcon className={pathname.startsWith(`/product/${text.toLowerCase()}`)  ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+                      {text?.toLocaleLowerCase()==="category" ? <Category /> : <SupportAgent />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
       {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2" : "text-slate-700 pl-2"}>
           <ListItemButton>
@@ -232,6 +257,7 @@ function Sidenav(props) {
           </Collapse>
         </>
         : ""}
+        
     </div>
   );
 
@@ -266,7 +292,7 @@ function Sidenav(props) {
             </div>
             <div onClick={handleLogout} className='text-red-400 font-semibold cursor-pointer rounded-md'>
               Logout
-              <ExitToAppIcon className='ml-2' />
+              <Logout className='ml-2' />
 
             </div>
           </div>
