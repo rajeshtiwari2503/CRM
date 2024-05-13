@@ -11,6 +11,7 @@ import http_request from '.././../../../http-request'
 import { Toaster } from 'react-hot-toast';
 import { ToastMessage } from '@/app/components/common/Toastify';
 import AddSparepart from './addSparepart';
+import { ReactLoader } from '@/app/components/common/Loading';
 
 const SparepartList = (props) => {
 
@@ -81,6 +82,9 @@ const SparepartList = (props) => {
           <div className=' ml-2 '>Add Sparepart</div>
         </div>
       </div>
+      {!data.length>0 ?  <ReactLoader />
+   : 
+   <>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -178,6 +182,7 @@ const SparepartList = (props) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+</>}
 
       {/* Edit Modal */}
       <Dialog open={editModalOpen} onClose={handleEditModalClose}>
