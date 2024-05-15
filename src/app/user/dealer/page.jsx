@@ -9,29 +9,29 @@ import ServiceList from './serviceList';
  
 
 
-const Service = () => {
+const Dealer = () => {
 
-  const [service, setService] = useState([])
+  const [dealers, setDealers] = useState([])
   const [refresh, setRefresh] = useState("")
 
   useEffect(() => {
-    getAllService()
+    getAllDealers()
 
   }, [refresh])
 
-  const getAllService = async () => {
+  const getAllDealers = async () => {
     try {
-      let response = await http_request.get("/getAllService")
+      let response = await http_request.get("/getAllDealer")
       let { data } = response;
 
-      setService(data)
+      setDealers(data)
     }
     catch (err) {
       console.log(err);
     }
   }
 
-  const data = service?.map((item, index) => ({ ...item, i: index + 1 }));
+  const data = dealers?.map((item, index) => ({ ...item, i: index + 1 }));
 
   const RefreshData = (data) => {
     setRefresh(data)
@@ -41,11 +41,11 @@ const Service = () => {
     <Sidenav>
       <Toaster />
       <>
-        <ServiceList data={data} RefreshData={RefreshData} />
-     
+       <ServiceList data={data} RefreshData={RefreshData} />
+        
       </>
     </Sidenav>
   )
 }
 
-export default Service
+export default Dealer

@@ -40,9 +40,8 @@ const Brand = () => {
     <Sidenav>
       <Toaster />
       <>
-        {brands.length > 0 ? <BrandList data={data} RefreshData={RefreshData} />
-          : <ReactLoader />
-        }
+         <BrandList data={data} RefreshData={RefreshData} />
+        
       </>
     </Sidenav>
   )

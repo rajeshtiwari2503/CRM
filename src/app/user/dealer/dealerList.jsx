@@ -9,9 +9,8 @@ import { ConfirmBox } from '@/app/components/common/ConfirmBox';
 import { ToastMessage } from '@/app/components/common/Toastify';
 import { Toaster } from 'react-hot-toast';
 import http_request from '.././../../../http-request'
-import { ReactLoader } from '@/app/components/common/Loading';
 
-const CustomerList = (props) => {
+const DealerList = (props) => {
 
 
   const router = useRouter()
@@ -45,7 +44,7 @@ const CustomerList = (props) => {
 
   const deleteData = async () => {
     try {
-      let response = await http_request.deleteData(`/deleteCustomer/${id}`);
+      let response = await http_request.deleteData(`/deleteDealer/${id}`);
       let { data } = response;
       setConfirmBoxView(false);
       props?.RefreshData(data)
@@ -60,24 +59,24 @@ const CustomerList = (props) => {
   }
 
   const handleAdd = () => {
-    router.push("/user/customer/add")
+    router.push("/user/dealer/add")
   }
   
   const handleDetails = (id) => {
-    router.push(`/user/customer/details/${id}`)
+    router.push(`/user/dealer/details/${id}`)
   }
 
   const handleEdit = (id) => {
-    router.push(`/user/customer/edit/${id}`);
+    router.push(`/user/dealer/edit/${id}`);
   };
   return (
     <div>
       <Toaster />
       <div className='flex justify-between items-center mb-3'>
-        <div className='font-bold text-2xl'>Customer Information</div>
+        <div className='font-bold text-2xl'>Dealer Information</div>
         <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
           <Add style={{ color: "white" }} />
-          <div className=' ml-2 '>Add Customer</div>
+          <div className=' ml-2 '>Add Brand</div>
         </div>
       </div>
       {!data.length > 0 ? <ReactLoader />
@@ -157,7 +156,7 @@ const CustomerList = (props) => {
   );
 };
 
-export default CustomerList;
+export default DealerList;
 
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
