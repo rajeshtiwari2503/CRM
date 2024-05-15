@@ -11,7 +11,7 @@ import { Toaster } from 'react-hot-toast';
 import http_request from '.././../../../http-request'
 import { ReactLoader } from '@/app/components/common/Loading';
 
-const ServiceList = (props) => {
+const ComplaintList = (props) => {
 
 
   const router = useRouter()
@@ -45,7 +45,7 @@ const ServiceList = (props) => {
 
   const deleteData = async () => {
     try {
-      let response = await http_request.deleteData(`/deleteService/${id}`);
+      let response = await http_request.deleteData(`/deleteComplaint/${id}`);
       let { data } = response;
       setConfirmBoxView(false);
       props?.RefreshData(data)
@@ -60,24 +60,24 @@ const ServiceList = (props) => {
   }
 
   const handleAdd = () => {
-    router.push("/user/service/add")
+    router.push("/complaint/allComplaint/add")
   }
   
   const handleDetails = (id) => {
-    router.push(`/user/service/details/${id}`)
+    router.push(`/complaint/allComplaint/details/${id}`)
   }
 
   const handleEdit = (id) => {
-    router.push(`/user/service/edit/${id}`);
+    router.push(`/complaint/allComplaint/edit/${id}`);
   };
   return (
     <div>
       <Toaster />
       <div className='flex justify-between items-center mb-3'>
-        <div className='font-bold text-2xl'>Service Information</div>
+        <div className='font-bold text-2xl'>Complaint Information</div>
         <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
           <Add style={{ color: "white" }} />
-          <div className=' ml-2 '>Add Service</div>
+          <div className=' ml-2 '>Add Complaint</div>
         </div>
       </div>
       {!data.length > 0 ? <div className='h-[400px] flex justify-center items-center'> <ReactLoader /></div>
@@ -157,7 +157,7 @@ const ServiceList = (props) => {
   );
 };
 
-export default ServiceList;
+export default ComplaintList;
 
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);

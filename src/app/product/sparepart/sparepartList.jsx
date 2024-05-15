@@ -82,7 +82,7 @@ const SparepartList = (props) => {
           <div className=' ml-2 '>Add Sparepart</div>
         </div>
       </div>
-      {!data.length>0 ?  <ReactLoader />
+      {!data.length>0 ?  <div className='h-[400px] flex justify-center items-center'> <ReactLoader /></div>
    : 
    <>
       <TableContainer component={Paper}>
