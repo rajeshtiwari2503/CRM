@@ -3,26 +3,22 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal, TextField, TablePagination, TableSortLabel, IconButton, Dialog, DialogContent, DialogActions, DialogTitle } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CloseIcon from '@mui/icons-material/Close';
 import { Add, Visibility } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { ConfirmBox } from '@/app/components/common/ConfirmBox';
-import http_request from '.././../../../http-request'
-import { Toaster } from 'react-hot-toast';
 import { ToastMessage } from '@/app/components/common/Toastify';
-import AddCategory from './addCategory';
+import { Toaster } from 'react-hot-toast';
+import http_request from '.././../../../http-request'
 import { ReactLoader } from '@/app/components/common/Loading';
 
-const CategoryList = (props) => {
+const ServiceList = (props) => {
 
 
   const router = useRouter()
 
   const data = props?.data;
-  const [editModalOpen, setEditModalOpen] = useState(false);
   const [confirmBoxView, setConfirmBoxView] = useState(false);
-  const [cateId, setCateId] = useState("");
-  const [editData, setEditData] = useState(null);
+  const [id, setId] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortDirection, setSortDirection] = useState('asc');
@@ -43,22 +39,13 @@ const CategoryList = (props) => {
     setSortBy(property);
   };
 
-  const sortedData = stableSort(data, getComparator(sortDirection, sortBy))?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const sortedData = stableSort(data, getComparator(sortDirection, sortBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
 
 
-  const handleEditModalClose = () => {
-    setEditModalOpen(false);
-  };
-
-
-  const handleAdd = (row) => {
-    setEditData(row)
-    setEditModalOpen(true);
-  }
   const deleteData = async () => {
     try {
-      let response = await http_request.deleteData(`/deleteProductCategory/${cateId}`);
+      let response = await http_request.deleteData(`/deleteService/${id}`);
       let { data } = response;
       setConfirmBoxView(false);
       props?.RefreshData(data)
@@ -68,21 +55,32 @@ const CategoryList = (props) => {
     }
   }
   const handleDelete = (id) => {
-    setCateId(id)
     setConfirmBoxView(true);
+    setId(id)
   }
 
+  const handleAdd = () => {
+    router.push("/user/service/add")
+  }
+  
+  const handleDetails = (id) => {
+    router.push(`/user/service/details/${id}`)
+  }
+
+  const handleEdit = (id) => {
+    router.push(`/user/service/edit/${id}`);
+  };
   return (
     <div>
       <Toaster />
       <div className='flex justify-between items-center mb-3'>
-        <div className='font-bold text-2xl'>Category Information</div>
+        <div className='font-bold text-2xl'>Service Information</div>
         <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
           <Add style={{ color: "white" }} />
-          <div className=' ml-2 '>Add Category</div>
+          <div className=' ml-2 '>Add Service</div>
         </div>
       </div>
-      {!data.length>0 ? <ReactLoader />
+      {!data.length > 0 ? <ReactLoader />
         :
         <>
           <TableContainer component={Paper}>
@@ -104,7 +102,7 @@ const CategoryList = (props) => {
                       direction={sortDirection}
                       onClick={() => handleSort('name')}
                     >
-                      Category
+                      Name
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>
@@ -113,16 +111,7 @@ const CategoryList = (props) => {
                       direction={sortDirection}
                       onClick={() => handleSort('email')}
                     >
-                      Status
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'createdAt'}
-                      direction={sortDirection}
-                      onClick={() => handleSort('createdAt')}
-                    >
-                      CreatedAt
+                      Email
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>Actions</TableCell>
@@ -130,20 +119,19 @@ const CategoryList = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData?.map((row) => (
+                {sortedData.map((row) => (
                   <TableRow key={row?.i} hover>
                     <TableCell>{row?.i}</TableCell>
-                    <TableCell>{row?.categoryName}</TableCell>
-                    <TableCell>{row?.status}</TableCell>
-                    <TableCell>{new Date(row?.createdAt)?.toLocaleDateString()}</TableCell>
+                    <TableCell>{row?.name}</TableCell>
+                    <TableCell>{row?.email}</TableCell>
                     <TableCell>
-                      <IconButton aria-label="view"  >
+                      <IconButton aria-label="view" onClick={() => handleDetails(row?._id)}>
                         <Visibility color='primary' />
                       </IconButton>
-                      <IconButton aria-label="edit" onClick={() => handleAdd(row)}>
+                      <IconButton aria-label="edit" onClick={() => handleEdit(row?._id)}>
                         <EditIcon color='success' />
                       </IconButton>
-                      <IconButton aria-label="delete" onClick={() => handleDelete(row._id)}>
+                      <IconButton aria-label="delete" onClick={() => handleDelete(row?._id)}>
                         <DeleteIcon color='error' />
                       </IconButton>
                     </TableCell>
@@ -156,51 +144,29 @@ const CategoryList = (props) => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={data?.length}
+            count={data.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </>}
-      {/* Edit Modal */}
-      <Dialog open={editModalOpen} onClose={handleEditModalClose}>
-        <DialogTitle>{editData?._id ? "Edit Category" : "Add Category"}</DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleEditModalClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent>
-          <AddCategory existingCategory={editData} RefreshData={props?.RefreshData} onClose={handleEditModalClose} />
-        </DialogContent>
-
-      </Dialog>
-
 
       <ConfirmBox bool={confirmBoxView} setConfirmBoxView={setConfirmBoxView} onSubmit={deleteData} />
-
     </div>
   );
 };
 
-export default CategoryList;
+export default ServiceList;
 
 function stableSort(array, comparator) {
-  const stabilizedThis = array?.map((el, index) => [el, index]);
-  stabilizedThis?.sort((a, b) => {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis?.map((el) => el[0]);
+  return stabilizedThis.map((el) => el[0]);
 }
 
 function getComparator(order, orderBy) {

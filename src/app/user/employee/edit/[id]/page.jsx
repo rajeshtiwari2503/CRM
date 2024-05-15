@@ -1,31 +1,54 @@
 
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import http_request from '../../../../http-request'
-import { Toaster } from 'react-hot-toast';
+import http_request from '../../../../../../http-request'
 import Sidenav from '@/app/components/Sidenav'
 import { ToastMessage } from '@/app/components/common/Toastify';
 import { useRouter } from 'next/navigation';
 
-
-const AddBrand = () => {
-
-    const router = useRouter()
-
+const Editemployee = ({ params } ) => {
+    const router = useRouter();
+    const [id,setId]=useState("")
+    const [employee, setEmployee] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+    const { register, handleSubmit, formState: { errors }, getValues,setValue } = useForm();
 
-    const RegiterAdmin = async (reqdata) => {
+    useEffect(() => {
+        getEmployeeById()
+        if (employee) {
+            setValue('name', employee.name);
+            setValue('email', employee.email);
+            setValue('contact', employee.contact);
+            setValue('password', employee.password);
+          
+        }
+    }, [ id])
+
+  
+
+    const getEmployeeById = async ( ) => {
+        try {
+            let response = await http_request.get(`/getEmployeeBy/${params.id}`)
+            let { data } = response;
+            setEmployee(data)
+            setId(data?._id)
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+   
+
+    const UpdateEmployee = async (reqdata) => {
         try {
             setLoading(true)
-
-            let response = await http_request.post('/brandRegistration', reqdata)
+            let response = await http_request.patch(`/editEmployee/${id}`, reqdata)
             const { data } = response
             ToastMessage(data)
             setLoading(false)
-            router.push("/brand")
+            router.push("/user/employee")
         }
         catch (err) {
             setLoading(false)
@@ -37,20 +60,19 @@ const AddBrand = () => {
     }
 
     const onSubmit = (data) => {
-        console.log(data); // Handle form data submission
-        RegiterAdmin(data)
+        UpdateEmployee(data)
     };
 
 
 
     return (
         <>
-            <Toaster />
+
             <Sidenav >
                 <div className=" ">
                     <div  >
                         <h2 className=" text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                            Create a new brand
+                            Edit Employee
                         </h2>
 
                         <form className=" grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -120,7 +142,7 @@ const AddBrand = () => {
                                     <input
                                         id="password"
                                         name="password"
-                                        type="password"
+                                        type="text"
                                         autoComplete="new-password"
                                         required
                                         {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters long' } })}
@@ -129,23 +151,7 @@ const AddBrand = () => {
                                 </div>
                                 {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                             </div>
-                            <div>
-                                <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Confirm Password
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="confirmPassword"
-                                        name="confirmPassword"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        required
-                                        {...register('confirmPassword', { required: 'Confirm Password is required', validate: value => value === getValues('password') || 'The passwords do not match' })}
-                                        className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.confirmPassword ? 'border-red-500' : ''}`}
-                                    />
-                                </div>
-                                {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
-                            </div>
+                          
 
                         </form>
                         <div className='mt-5  '>
@@ -155,7 +161,7 @@ const AddBrand = () => {
                                 onClick={handleSubmit(onSubmit)}
                                 className="flex   justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                Save
+                                Update
                             </button>
                         </div>
                     </div>
@@ -168,7 +174,7 @@ const AddBrand = () => {
     )
 }
 
-export default AddBrand
+export default Editemployee
 
 
 

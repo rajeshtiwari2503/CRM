@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast';
 import { ToastMessage } from '@/app/components/common/Toastify';
 
 import AddProduct from './addProduct';
+import { ReactLoader } from '../components/common/Loading';
 
 const ProductList = (props) => {
 
@@ -83,6 +84,9 @@ const ProductList = (props) => {
           <div className=' ml-2 '>Add Product</div>
         </div>
       </div>
+    {!data.length>0 ?  <ReactLoader />
+   : 
+   <>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -171,7 +175,7 @@ const ProductList = (props) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-
+</>}
       {/* Edit Modal */}
       <Dialog open={editModalOpen} onClose={handleEditModalClose}>
         <DialogTitle>{editData?._id ? "Edit Product" : "Add Product"}</DialogTitle>

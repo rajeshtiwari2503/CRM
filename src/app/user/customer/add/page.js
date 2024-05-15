@@ -2,8 +2,7 @@
 "use client"
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import http_request from '../../../../http-request'
-import { Toaster } from 'react-hot-toast';
+import http_request from '../../../../../http-request'
 import Sidenav from '@/app/components/Sidenav'
 import { ToastMessage } from '@/app/components/common/Toastify';
 import { useRouter } from 'next/navigation';
@@ -17,15 +16,15 @@ const AddBrand = () => {
 
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
 
-    const RegiterAdmin = async (reqdata) => {
+    const RegiterUser = async (reqdata) => {
         try {
             setLoading(true)
 
-            let response = await http_request.post('/brandRegistration', reqdata)
+            let response = await http_request.post('/userRegistration', reqdata)
             const { data } = response
             ToastMessage(data)
             setLoading(false)
-            router.push("/brand")
+            router.push("/user/customer")
         }
         catch (err) {
             setLoading(false)
@@ -37,20 +36,19 @@ const AddBrand = () => {
     }
 
     const onSubmit = (data) => {
-        console.log(data); // Handle form data submission
-        RegiterAdmin(data)
+        RegiterUser(data)
     };
 
 
 
     return (
         <>
-            <Toaster />
+         
             <Sidenav >
                 <div className=" ">
                     <div  >
                         <h2 className=" text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                            Create a new brand
+                            Create a new Customer
                         </h2>
 
                         <form className=" grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmit)}>

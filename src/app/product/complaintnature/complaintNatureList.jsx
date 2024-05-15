@@ -10,13 +10,14 @@ import AddNature from './addNature';
 import { ConfirmBox } from '@/app/components/common/ConfirmBox';
 import http_request from '../../../../http-request'
 import { Toaster } from 'react-hot-toast';
+import { ReactLoader } from '@/app/components/common/Loading';
 
-const  ComplaintNatureList   = (props) => {
+const ComplaintNatureList = (props) => {
 
 
   const router = useRouter()
 
-  const data =  props?.data;
+  const data = props?.data;
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [confirmBoxView, setConfirmBoxView] = useState(false);
   const [natureId, setNatureId] = useState("");
@@ -40,11 +41,11 @@ const  ComplaintNatureList   = (props) => {
     setSortDirection(isAsc ? 'desc' : 'asc');
     setSortBy(property);
   };
- 
+
   const sortedData = stableSort(data, getComparator(sortDirection, sortBy))?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
- 
- 
+
+
   const handleEditModalClose = () => {
     setEditModalOpen(false);
   };
@@ -79,98 +80,102 @@ const  ComplaintNatureList   = (props) => {
           <div className=' ml-2 '>Add Nature</div>
         </div>
       </div>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'id'}
-                  direction={sortDirection}
-                  onClick={() => handleSort('id')}
-                >
-                  ID
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'name'}
-                  direction={sortDirection}
-                  onClick={() => handleSort('name')}
-                >
-                Product Name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'brandName'}
-                  direction={sortDirection}
-                  onClick={() => handleSort('brandName')}
-                >
-             Complaint Nature
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'email'}
-                  direction={sortDirection}
-                  onClick={() => handleSort('email')}
-                >
-                  Status
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'createdAt'}
-                  direction={sortDirection}
-                  onClick={() => handleSort('createdAt')}
-                >
-                 CreatedAt
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>Actions</TableCell>
 
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {sortedData?.map((row) => (
-              <TableRow key={row?.i} hover>
-                <TableCell>{row?.i}</TableCell>
-                <TableCell>{row?.productName}</TableCell>
-                <TableCell>{row?.nature}</TableCell>
-                {/* <TableCell>{row?.status}</TableCell> */}
-                <TableCell>{new Date(row?.createdAt)?.toLocaleDateString()}</TableCell>
-                <TableCell>
-                  <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>
-                    <Visibility color='primary' />
-                  </IconButton>
-                  <IconButton aria-label="edit" onClick={() => handleAdd(row)}>
-                    <EditIcon color='success' />
-                  </IconButton>
-                  <IconButton aria-label="delete" onClick={() => handleDelete(row._id)}>
-                    <DeleteIcon color='error' />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {!data.length > 0 ? <ReactLoader />
+        :
+        <>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'id'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('id')}
+                    >
+                      ID
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'name'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('name')}
+                    >
+                      Product Name
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'brandName'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('brandName')}
+                    >
+                      Complaint Nature
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'email'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('email')}
+                    >
+                      Status
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'createdAt'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('createdAt')}
+                    >
+                      CreatedAt
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>Actions</TableCell>
 
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={data?.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sortedData?.map((row) => (
+                  <TableRow key={row?.i} hover>
+                    <TableCell>{row?.i}</TableCell>
+                    <TableCell>{row?.productName}</TableCell>
+                    <TableCell>{row?.nature}</TableCell>
+                    {/* <TableCell>{row?.status}</TableCell> */}
+                    <TableCell>{new Date(row?.createdAt)?.toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <IconButton aria-label="view" onClick={() => handleDelete(row.id)}>
+                        <Visibility color='primary' />
+                      </IconButton>
+                      <IconButton aria-label="edit" onClick={() => handleAdd(row)}>
+                        <EditIcon color='success' />
+                      </IconButton>
+                      <IconButton aria-label="delete" onClick={() => handleDelete(row._id)}>
+                        <DeleteIcon color='error' />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={data?.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>}
 
       {/* Edit Modal */}
-       {/* Edit Modal */}
       <Dialog open={editModalOpen} onClose={handleEditModalClose}>
-        <DialogTitle>{editData?._id?"Edit Complaint Nature" :"Add Complaint Nature"}</DialogTitle>
+        <DialogTitle>{editData?._id ? "Edit Complaint Nature" : "Add Complaint Nature"}</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleEditModalClose}
@@ -184,9 +189,9 @@ const  ComplaintNatureList   = (props) => {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <AddNature existingNature={editData}  RefreshData={props?.RefreshData} onClose={handleEditModalClose}/>
+          <AddNature existingNature={editData} RefreshData={props?.RefreshData} onClose={handleEditModalClose} />
         </DialogContent>
-        
+
       </Dialog>
 
       <ConfirmBox bool={confirmBoxView} setConfirmBoxView={setConfirmBoxView} onSubmit={deleteData} />
@@ -194,7 +199,7 @@ const  ComplaintNatureList   = (props) => {
   );
 };
 
-export default  ComplaintNatureList  ;
+export default ComplaintNatureList;
 
 function stableSort(array, comparator) {
   const stabilizedThis = array?.map((el, index) => [el, index]);

@@ -2,8 +2,7 @@
 "use client"
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import http_request from '../../../../http-request'
-import { Toaster } from 'react-hot-toast';
+import http_request from '../../../../../http-request'
 import Sidenav from '@/app/components/Sidenav'
 import { ToastMessage } from '@/app/components/common/Toastify';
 import { useRouter } from 'next/navigation';
@@ -17,7 +16,7 @@ const AddBrand = () => {
 
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
 
-    const RegiterAdmin = async (reqdata) => {
+    const RegiterBrand = async (reqdata) => {
         try {
             setLoading(true)
 
@@ -25,7 +24,7 @@ const AddBrand = () => {
             const { data } = response
             ToastMessage(data)
             setLoading(false)
-            router.push("/brand")
+            router.push("/user/brand")
         }
         catch (err) {
             setLoading(false)
@@ -37,15 +36,14 @@ const AddBrand = () => {
     }
 
     const onSubmit = (data) => {
-        console.log(data); // Handle form data submission
-        RegiterAdmin(data)
+        RegiterBrand(data)
     };
 
 
 
     return (
         <>
-            <Toaster />
+         
             <Sidenav >
                 <div className=" ">
                     <div  >
