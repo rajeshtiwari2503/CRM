@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react'
 import http_request from "../../../../http-request"
 import { Toaster } from 'react-hot-toast';
 import Sidenav from '@/app/components/Sidenav'
-import { ReactLoader } from '@/app/components/common/Loading';
-import ServiceList from './serviceList';
+import DealerList from './dealerList';
  
 
 
@@ -41,7 +40,7 @@ const Dealer = () => {
     <Sidenav>
       <Toaster />
       <>
-       <ServiceList data={data} RefreshData={RefreshData} />
+       <DealerList data={data} RefreshData={RefreshData} />
         
       </>
     </Sidenav>

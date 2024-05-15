@@ -1,12 +1,12 @@
 import Sidenav from '@/app/components/Sidenav'
 import React from 'react'
 
-const CreateComplaint = () => {
+const AsignComplaint = () => {
   return (
     <Sidenav>
-    <div>CreateComplaint</div>
+    <div>AsignComplaint</div>
     </Sidenav>
   )
 }
 
-export default CreateComplaint
+export default AsignComplaint

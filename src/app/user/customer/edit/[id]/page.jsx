@@ -16,7 +16,7 @@ const Edituser = ({ params } ) => {
     const { register, handleSubmit, formState: { errors }, getValues,setValue } = useForm();
 
     useEffect(() => {
-        getuserById()
+        getUserById()
         if (user) {
             setValue('name', user.name);
             setValue('email', user.email);
@@ -48,7 +48,7 @@ const Edituser = ({ params } ) => {
             const { data } = response
             ToastMessage(data)
             setLoading(false)
-            router.push("/user/user")
+            router.push("/user/customer")
         }
         catch (err) {
             setLoading(false)

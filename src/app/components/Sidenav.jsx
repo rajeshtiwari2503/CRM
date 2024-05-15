@@ -34,6 +34,7 @@ function Sidenav(props) {
   const router = useRouter()
   const pathname = usePathname()
 
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [isCollapse, setIsCollapse] = React.useState(false);
@@ -163,61 +164,74 @@ function Sidenav(props) {
           </ListItemButton>
         </ListItem>
         : ""}
-      <Collapse in={isCollapseProduct} timeout={"auto"} unmountOnExit >
+      <Collapse in={isCollapseProduct} timeout={300} unmountOnExit>
         <List className=' '>
           {['Category', 'Product', 'SparePart', 'Complaint Nature'].map((text, index) => (
             <ListItem key={text} disablePadding
-              className={pathname.startsWith(`/product/${text.split(" ")}`)
-                ? 'bg-[#f1f5f9] text-sky-600 pl-4'
-                : 'text-slate-700 pl-4'
+              className={
+                text === "Product" ? (pathname === "/product" ? 'text-sky-600 pl-4' : 'text-slate-700 pl-4') :
+                  text === "Complaint Nature" ? (pathname === "/product/complaintnature" ? 'text-sky-600 pl-4' : 'text-slate-700 pl-4') :
+                    pathname === `/product/${text.toLowerCase()}` ? 'text-sky-600 pl-4' : 'text-slate-700 pl-4'
               }
-              onClick={(event) => { text === "Product" ? router.push(`/product`) : text === "Complaint Nature" ? router.push(`/product/complaintnature`) : router.push(`/product/${text.toLowerCase()}`) }}
+              onClick={(event) => {
+                text === "Product" ? router.push(`/product`) :
+                  text === "Complaint Nature" ? router.push(`/product/complaintnature`) :
+                    router.push(`/product/${text.toLowerCase()}`)
+              }}
             >
               <ListItemButton>
-                <ListItemIcon className={pathname.startsWith(`/product/${text.toLowerCase() }`) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
-                  {text?.toLocaleLowerCase() === "category" ? <Category /> : <SupportAgent />}
+                <ListItemIcon
+                  className={
+                    text === "Product" ? (pathname === "/product" ? 'text-sky-600  ' : 'text-slate-700  ') :
+                      text === "Complaint Nature" ? (pathname === "/product/complaintnature" ? 'text-sky-600  ' : 'text-slate-700  ') :
+                        pathname === `/product/${text.toLowerCase()}` ? 'text-sky-600 ' : 'text-slate-700  '
+                  }
+                >
+                  {text?.toLowerCase() === "category" ? <Category /> : <SupportAgent />}
                 </ListItemIcon>
-                <ListItemText sx={{marginLeft:"-20px"}} primary={text} />
+                <ListItemText sx={{ marginLeft: "-20px" }} primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Collapse>
+
+
       {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem onClick={handleCollapseUser} disablePadding className={pathname.startsWith("/user") ? "bg-[#f1f5f9] text-sky-600 pl-2   rounded-tl-full rounded-bl-full" : "text-slate-700 pl-2"}>
           <ListItemButton>
             <ListItemIcon className={pathname.startsWith("/user") ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
               <Person />
             </ListItemIcon>
-            <ListItemText  primary={"User"} />
+            <ListItemText primary={"User"} />
             {isCollapseUser ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>
         : ""}
       <Collapse in={isCollapseUser} timeout={"auto"} unmountOnExit >
         <List className=' '>
-          {['Brand', 'Service', 'Customer', 'Employee'].map((text, index) => (
+          {['Brand', 'Service','Dealer', 'Customer', 'Employee'].map((text, index) => (
             <ListItem key={text} disablePadding
               className={pathname.startsWith(`/user/${text.toLowerCase()}`)
-                ? 'bg-[#f1f5f9] text-sky-600 pl-4'
+                ? '  text-sky-600 pl-4'
                 : 'text-slate-700 pl-4'
               }
-              onClick={(event) => { text === "User" ?    router.push(`/user/${text.toLowerCase()}`):router.push(`/user/${text.toLowerCase()}`) }}
+              onClick={(event) => { text === "User" ? router.push(`/user/${text.toLowerCase()}`) : router.push(`/user/${text.toLowerCase()}`) }}
             >
               <ListItemButton>
-                <ListItemIcon className={pathname.startsWith(`/user/${text.toLowerCase()}`) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+                <ListItemIcon className={pathname.startsWith(`/user/${text.toLowerCase()}`) ? "  text-sky-600" : "text-slate-700"}>
                   {text?.toLocaleLowerCase() === "brand" ? <BrandingWatermark /> : <Person />}
                 </ListItemIcon>
-                <ListItemText  sx={{marginLeft:"-20px"}} primary={text} />
+                <ListItemText sx={{ marginLeft: "-20px" }} primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Collapse>
       {value?.user?.role === "ADMIN" || value?.user?.role === "BRAND" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
-        ? <ListItem onClick={handleCollapseComplaint} disablePadding className={pathname.startsWith("/user") ? "bg-[#f1f5f9] text-sky-600 pl-2   rounded-tl-full rounded-bl-full" : "text-slate-700 pl-2"}>
+        ? <ListItem onClick={handleCollapseComplaint} disablePadding className={pathname.startsWith("/complaint") ? "bg-[#f1f5f9] text-sky-600 pl-2   rounded-tl-full rounded-bl-full" : "text-slate-700 pl-2"}>
           <ListItemButton>
-            <ListItemIcon className={pathname.startsWith("/user") ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
+            <ListItemIcon className={pathname.startsWith("/complaint") ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
               <Warning />
             </ListItemIcon>
             <ListItemText primary={"Complaint"} />
@@ -227,25 +241,34 @@ function Sidenav(props) {
         : ""}
       <Collapse in={isCollapseComplaint} timeout={"auto"} unmountOnExit >
         <List className=' '>
-          {['Create  ', 'Asign  ', 'Close  ', 'Cancel  '].map((text, index) => (
-            <ListItem key={text} disablePadding
-              className={pathname.startsWith(`/complaint/${text.toLowerCase()}`)
-                ? 'bg-[#f1f5f9] text-sky-600 pl-4'
-                : 'text-slate-700  pl-4'
+          {['Create', 'All Complaint', 'Asign', 'Close', 'Cancel'].map((text, index) => (
+            <ListItem key={text1} disablePadding
+              className={
+                text === "All Complaint" ? (pathname === "/complaint/allComplaint" ? 'text-sky-600 pl-4' : 'text-slate-700 pl-4') :
+                  pathname === `/complaint/${text.toLowerCase()}` ? 'text-sky-600 pl-4' : 'text-slate-700 pl-4'
               }
-              onClick={(event) => { text === "Complaint" ?    router.push(`/complaint/${text.toLowerCase()}`):router.push(`/complaint/${text.toLowerCase()}`) }}
+              onClick={(event) => {
+
+                text === "All Complaint" ? router.push(`/complaint/allComplaint`) :
+                  router.push(`/complaint/${text.toLowerCase()}`)
+              }}
             >
               <ListItemButton>
-                <ListItemIcon className={pathname.startsWith(`/complaint/${text.toLowerCase()}`) ? "bg-[#f1f5f9] text-sky-600" : "text-slate-700"}>
-                  {text?.toLocaleLowerCase() === "brand" ? <BrandingWatermark /> : <Warning />}
+                <ListItemIcon
+                  className={
+                    text === "All Complaint" ? (pathname === "/complaint/allComplaint" ? 'text-sky-600  ' : 'text-slate-700 ') :
+                      pathname === `/complaint/${text.toLowerCase()}` ? 'text-sky-600  ' : 'text-slate-700  '
+                  }
+                >
+                  {text1?.toLocaleLowerCase() === "brand" ? <BrandingWatermark /> : <Warning />}
                 </ListItemIcon>
-                <ListItemText sx={{marginLeft:"-20px"}} primary={text} />
+                <ListItemText sx={{ marginLeft: "-20px" }} primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Collapse>
-     
+
       {value?.user?.role === "ADMIN" || value?.user?.role === "EMPLOYEE" || value?.user?.role === "SERVICE"
         ? <ListItem disablePadding className={pathname.startsWith("/" + text1.toLocaleLowerCase()) ? "bg-[#f1f5f9] text-sky-600 pl-2 rounded-tl-full rounded-bl-full" : "text-slate-700 pl-2"}>
           <ListItemButton>

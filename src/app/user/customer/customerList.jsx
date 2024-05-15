@@ -45,7 +45,7 @@ const CustomerList = (props) => {
 
   const deleteData = async () => {
     try {
-      let response = await http_request.deleteData(`/deleteCustomer/${id}`);
+      let response = await http_request.deleteData(`/deleteUser/${id}`);
       let { data } = response;
       setConfirmBoxView(false);
       props?.RefreshData(data)

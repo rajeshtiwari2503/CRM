@@ -24,7 +24,7 @@ const AddBrand = () => {
             const { data } = response
             ToastMessage(data)
             setLoading(false)
-            router.push("/user/user")
+            router.push("/user/customer")
         }
         catch (err) {
             setLoading(false)
