@@ -39,11 +39,19 @@ const AddComplaint = () => {
         RegiterComplaint(data)
     };
 
+    const [selectedOption, setSelectedOption] = useState('');
 
-
+    const handleSelectChange = (e) => {
+      setSelectedOption(e.target.value);
+    };
+    const options = [
+        { label: 'Option 1', value: 'option1' },
+        { label: 'Option 2', value: 'option2' },
+        { label: 'Option 3', value: 'option3' },
+      ];
     return (
         <>
-         
+
             <Sidenav >
                 <div className=" ">
                     <div  >
@@ -110,40 +118,17 @@ const AddComplaint = () => {
                                     </p>
                                 )}
                             </div>
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        required
-                                        {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters long' } })}
-                                        className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.password ? 'border-red-500' : ''}`}
-                                    />
-                                </div>
-                                {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
-                            </div>
-                            <div>
-                                <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Confirm Password
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="confirmPassword"
-                                        name="confirmPassword"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        required
-                                        {...register('confirmPassword', { required: 'Confirm Password is required', validate: value => value === getValues('password') || 'The passwords do not match' })}
-                                        className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.confirmPassword ? 'border-red-500' : ''}`}
-                                    />
-                                </div>
-                                {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
-                            </div>
+                            <select
+                                className="block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                value={selectedOption}
+                                onChange={handleSelectChange}
+                            >
+                                {options.map(option => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
 
                         </form>
                         <div className='mt-5  '>
