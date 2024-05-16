@@ -5,6 +5,7 @@ import http_request from '../../../../../http-request'
 import Sidenav from '@/app/components/Sidenav'
 import { useRouter } from 'next/navigation';
 import { Edit } from '@mui/icons-material';
+import { ReactLoader } from '@/app/components/common/Loading';
 
 const ComplaintDetails = ({ params }) => {
     const router = useRouter();
@@ -43,7 +44,8 @@ const ComplaintDetails = ({ params }) => {
         <>
 
             <Sidenav >
-                <div className=" ">
+              {!complaint ?<div className='h-[500px] flex justify-center items-center'> <ReactLoader /></div>
+              :  <div className=" ">
                     <div className='flex justify-between items-center' >
                         <div className='' >
                             <h2 className="mb-5  text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -73,7 +75,7 @@ const ComplaintDetails = ({ params }) => {
                         </div>
                     </div>
                 </div>
-
+}
 
             </Sidenav>
         </>
