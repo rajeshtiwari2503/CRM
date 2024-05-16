@@ -60,7 +60,7 @@ const ComplaintList = (props) => {
   }
 
   const handleAdd = () => {
-    router.push("/complaint/allComplaint/add")
+    router.push("/complaint/add")
   }
   
   const handleDetails = (id) => {
@@ -68,7 +68,7 @@ const ComplaintList = (props) => {
   }
 
   const handleEdit = (id) => {
-    router.push(`/complaint/allComplaint/edit/${id}`);
+    router.push(`/complaint/edit/${id}`);
   };
   return (
     <div>
