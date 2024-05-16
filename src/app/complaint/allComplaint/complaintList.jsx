@@ -64,7 +64,7 @@ const ComplaintList = (props) => {
   }
   
   const handleDetails = (id) => {
-    router.push(`/complaint/allComplaint/details/${id}`)
+    router.push(`/complaint/details/${id}`)
   }
 
   const handleEdit = (id) => {
@@ -111,7 +111,7 @@ const ComplaintList = (props) => {
                       direction={sortDirection}
                       onClick={() => handleSort('email')}
                     >
-                      Email
+                      Status
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>Actions</TableCell>
@@ -123,7 +123,7 @@ const ComplaintList = (props) => {
                   <TableRow key={row?.i} hover>
                     <TableCell>{row?.i}</TableCell>
                     <TableCell>{row?.name}</TableCell>
-                    <TableCell>{row?.email}</TableCell>
+                    <TableCell>{row?.status}</TableCell>
                     <TableCell>
                       <IconButton aria-label="view" onClick={() => handleDetails(row?._id)}>
                         <Visibility color='primary' />
