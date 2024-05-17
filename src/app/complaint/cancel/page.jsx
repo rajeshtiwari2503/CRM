@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react'
 import http_request from "../../../../http-request"
 import { Toaster } from 'react-hot-toast';
 import Sidenav from '@/app/components/Sidenav';
-import AssignComplaintList from './assignComplaintList';
+import CancelComplaintList from './cancelComplaintList';
 
 
 
-const Assign = () => {
+const Cancel = () => {
 
   const [complaint, setComplaint] = useState([])
   const [refresh, setRefresh] = useState("")
@@ -29,7 +29,7 @@ const Assign = () => {
       console.log(err);
     }
   }
-  const sortData = complaint?.filter((f1) => f1?.status ==="ASSIGN")
+  const sortData = complaint?.filter((f1) => f1?.status ==="CANCEL")
   const data = sortData?.map((item, index) => ({ ...item, i: index + 1 }));
 
 
@@ -42,10 +42,10 @@ const Assign = () => {
     <Sidenav>
       <Toaster />
       <>
-        <AssignComplaintList data={data} RefreshData={RefreshData} />
+        <CancelComplaintList data={data} RefreshData={RefreshData} />
       </>
     </Sidenav>
   )
 }
 
-export default Assign
+export default Cancel
