@@ -2,72 +2,82 @@
 import Link from "next/link";
 import InputIcon from '@mui/icons-material/Input';
 import { useForm } from 'react-hook-form';
- import http_request from '../../../http-request'
+import http_request from '../../../http-request'
 import { ToastMessage } from '../components/common/Toastify';
 import { Toaster } from 'react-hot-toast';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
- 
 export default function SignIn() {
 
-const router=useRouter()
-
-  const [loading,setLoading]=useState(false)
-
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors }, getValues } = useForm();  
-   
-const Login=async(reqdata)=>{
-  try{
-    setLoading(true)
-     
-    let response=await http_request.post('/login',reqdata)
-    console.log(response);
-    const {data}=response
-    localStorage.setItem('user', JSON.stringify(data));
-    ToastMessage(data)
-    setLoading(false)
-     router.push("/dashboard")
-  }
-  catch(err){
-    setLoading(false)
-    ToastMessage(err?.response?.data)
 
-    console.log(err);
-  }
-
-}
-
-  const onSubmit = (data) => {
-    console.log(data);  
-    Login(data)
+  const Login = async (reqdata) => {
+    try {
+      setLoading(true);
+      let response = await http_request.post('/login', reqdata);
+      const { data } = response;
+      localStorage.setItem('user', JSON.stringify(data));
+      ToastMessage(data);
+      setLoading(false);
+      router.push("/dashboard");
+    } catch (err) {
+      setLoading(false);
+      ToastMessage(err?.response?.data);
+      console.log(err);
+    }
   };
 
+  const onSubmit = (data) => {
+    
+    Login(data);
+  };
 
-    return (
-      <>
-         <Toaster />
-        <div className="flex justify-center mt-16">
-            <div style={{minWidth:"30%"}}>
-        
-        <div className="shadow-lg flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            {/* <img
-              className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            /> */}
-            <div className="flex justify-center">
-            <InputIcon fontSize="large"/>
+  const SendOtp = async (email) => {
+    try {
+      setLoading(true);
+      let response = await http_request.post('/sendOtp', { email: email });
+      const { data } = response;
+      ToastMessage(data);
+      localStorage.setItem('userEmail', JSON.stringify(email));
+      setLoading(false);
+      router.push("/otp_Verification");
+    } catch (err) {
+      setLoading(false);
+      ToastMessage(err?.response?.data);
+      console.log(err);
+    }
+  };
+
+  const handleForgetPassword = () => {
+    const data ={ status: false, msg: "Please Enter Email!" }
+    const email = getValues('email');
+    if (!email) {
+      ToastMessage(data)
+      return;
+    }
+    SendOtp(email);
+  };
+
+  return (
+    <>
+      <Toaster />
+      <div className="flex justify-center mt-16">
+        <div style={{ minWidth: "30%" }}>
+          <div className="shadow-lg flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <div className="flex justify-center">
+                <InputIcon fontSize="large" />
+              </div>
+              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                Sign in to your account
+              </h2>
             </div>
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Sign in to your account
-            </h2>
-          </div>
-  
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+              <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                <div>
                   <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                     Email address
                   </label>
@@ -84,18 +94,16 @@ const Login=async(reqdata)=>{
                   </div>
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
-  
-             
-                <div className=" ">
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </a>
-                  </div>
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                      Password
+                    </label>
+                    <div className="text-sm">
+                      <div onClick={handleForgetPassword} className="font-semibold cursor-pointer text-indigo-600 hover:text-indigo-500">
+                        Forgot password?
+                      </div>
+                    </div>
                   </div>
                   <div className="mt-2">
                     <input
@@ -110,30 +118,27 @@ const Login=async(reqdata)=>{
                   </div>
                   {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                 </div>
-  
-              <div>
-                <button
-                  disabled={loading}
-                  onClick={handleSubmit(onSubmit)}
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-  
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{' '}
-              <Link href={"/sign_up"} className=" cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                 Sign Up
-              </Link>
-            </p>
+                <div>
+                  <button
+                    disabled={loading}
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Sign in
+                  </button>
+                </div>
+              </form>
+              <p className="mt-10 text-center text-sm text-gray-500">
+                Not a member?{' '}
+                <Link href="/sign_up" className="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                  Sign Up
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
-                
-        </div>
-        </div>
-      </>
-    )
-  }
-  
+      </div>
+    </>
+  );
+}
