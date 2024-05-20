@@ -55,7 +55,7 @@ const SignUp = () => {
       <div className="md:h-screen flex justify-center items-center">
         <div className='container flex justify-center my-8 '>
 
-          <div className={`w-full md:w-[100%] grid grid-cols-1 md:grid-cols-2 justify-center items-center`}>
+          <div className={`w-full md:w-[75%] grid grid-cols-1 md:grid-cols-2 justify-center items-center`}>
             <div className='shadow-md bg-[#fafcfd] rounded-tl-xl rounded-bl-xl '>
               {regData.map((item, i) => (
                 <div key={i}>
