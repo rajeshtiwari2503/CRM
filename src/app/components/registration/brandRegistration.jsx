@@ -8,7 +8,7 @@ import { ToastMessage } from '@/app/components/common/Toastify';
 import { useRouter } from 'next/navigation';
 
 
-const AddComplaint = () => {
+const BrandRegistration = () => {
 
   const router = useRouter()
 
@@ -16,15 +16,15 @@ const AddComplaint = () => {
 
   const { register, handleSubmit, formState: { errors }, getValues } = useForm();
 
-  const RegiterComplaint = async (reqdata) => {
+  const Regiter  = async (reqdata) => {
     try {
       setLoading(true)
 
-      let response = await http_request.post('/createComplaint', reqdata)
+      let response = await http_request.post('/brandRegistration', reqdata)
       const { data } = response
       ToastMessage(data)
       setLoading(false)
-      router.push("/complaint/allComplaint")
+      router.push("sign_in")
     }
     catch (err) {
       setLoading(false)
@@ -36,7 +36,7 @@ const AddComplaint = () => {
   }
 
   const onSubmit = (data) => {
-    RegiterComplaint(data)
+    Regiter(data)
   };
 
   const [selectedOption, setSelectedOption] = useState('');
@@ -50,15 +50,7 @@ const AddComplaint = () => {
     { label: 'Option 3', value: 'option3' },
   ];
   return (
-    <>
-
-      <Sidenav >
-        <div className=" ">
-          <div  >
-            <h2 className=" text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Create a new complaint
-            </h2>
-
+    <> <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="mt-3 grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-3" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -120,7 +112,7 @@ const AddComplaint = () => {
                     autoComplete="customerEmail"
                     required
                     {...register('customerName', { required: 'Name is required', minLength: { value: 3, message: 'Name must be at least 3 characters long' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.customerName ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.customerName ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.customerName && <p className="text-red-500 text-sm mt-1">{errors.customerName.message}</p>}
@@ -137,7 +129,7 @@ const AddComplaint = () => {
                     autoComplete="customerEmail"
                     required
                     {...register('customerEmail', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.customerEmail ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.customerEmail ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.customerEmail && <p className="text-red-500 text-sm mt-1">{errors.customerEmail.message}</p>}
@@ -155,7 +147,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('customerMobile', { required: 'Contact number is required', pattern: { value: /^\d{10}$/, message: 'Contact No. must be at least 10 characters long' } })}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.customerMobile ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.customerMobile ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -179,7 +171,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('zipCode', { required: 'zipCode number is required',    message: 'zipCode must be at least 10 characters long'  })}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.zipCode ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.zipCode ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -203,7 +195,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('address1', { required: 'address1 is required',  message: 'address1 must be at least 10 characters long'  })}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.address1 ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.address1 ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -227,7 +219,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('address2', { required: 'address2 is required',  message: 'address2 must be at least 10 characters long'  })}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.address2 ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.address2 ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -251,7 +243,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('listOfArea', { required: 'listOfArea is required',  message:'listOfArea must be at least 10 characters long' } )}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.listOfArea ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.listOfArea ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -275,7 +267,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('state', { required: 'state is required',   message: 'state must be at least 10 characters long'  })}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.state ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.state ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -299,7 +291,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('district', { required: 'district is required',  message: 'district must be at least 10 characters long' })}
-                    className={`block p-3  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.district ? 'border-red-500' : ''
+                    className={`block p-3  w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.district ? 'border-red-500' : ''
                       }`}
 
                   />
@@ -322,7 +314,7 @@ const AddComplaint = () => {
                     autoComplete="tel"
                     required
                     {...register('city', { required: 'city is required', minLength: { value: 3, message: 'city must be at least 3 characters long' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.city ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.city ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>}
@@ -339,7 +331,7 @@ const AddComplaint = () => {
                     autoComplete="tel"
                     required
                     {...register('locality', { required: 'Locality is required', minLength: { value: 3, message: 'Locality must be at least 3 characters long' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.locality ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.locality ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.locality && <p className="text-red-500 text-sm mt-1">{errors.locality.message}</p>}
@@ -356,7 +348,7 @@ const AddComplaint = () => {
                     autoComplete="tel"
                     required
                     {...register('landmark', { required: 'Landmark is required', minLength: { value: 3, message: 'Landmark must be at least 3 characters long' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.landmark ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.landmark ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.landmark && <p className="text-red-500 text-sm mt-1">{errors.landmark.message}</p>}
@@ -373,7 +365,7 @@ const AddComplaint = () => {
                     autoComplete="tel"
                     required
                     {...register('complaintNature', { required: 'Complaint Nature is required', minLength: { value: 3, message: 'Complaint Nature must be at least 3 characters long' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.complaintNature ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.complaintNature ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.complaintNature && <p className="text-red-500 text-sm mt-1">{errors.complaintNature.message}</p>}
@@ -391,7 +383,7 @@ const AddComplaint = () => {
                     required
 
                     {...register('complaintDetails', { required: 'Complaint Details is required', minLength: { value: 3, message: 'Complaint Details be at least 3 characters long' } })}
-                    className={`block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.complaintDetails ? 'border-red-500' : ''}`}
+                    className={`block p-3 w-full rounded-md border-0 py-.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.complaintDetails ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.complaintDetails && <p className="text-red-500 text-sm mt-1">{errors.complaintDetails.message}</p>}
@@ -402,22 +394,19 @@ const AddComplaint = () => {
                 type="button"
                 disabled={loading}
                 onClick={handleSubmit(onSubmit)}
-                className="flex   justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex   justify-center rounded-md bg-indigo-600 px-3 py-.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Save
               </button>
             </div>
-          </div>
-        </div>
-
-
-      </Sidenav>
+            </div>
+          
     </>
 
   )
 }
 
-export default AddComplaint
+export default BrandRegistration
 
 
 

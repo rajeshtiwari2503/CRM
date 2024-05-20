@@ -11,7 +11,7 @@ import { Toaster } from 'react-hot-toast';
 import http_request from '.././../../../http-request'
 import { ReactLoader } from '@/app/components/common/Loading';
 
-const ComplaintList = (props) => {
+const AssignComplaintList = (props) => {
 
 
   const router = useRouter()
@@ -39,7 +39,7 @@ const ComplaintList = (props) => {
     setSortBy(property);
   };
 
-  const sortedData = stableSort(data, getComparator(sortDirection, sortBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const sortedData = stableSort(data, getComparator(sortDirection, sortBy))?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
 
 
@@ -74,13 +74,13 @@ const ComplaintList = (props) => {
     <div>
       <Toaster />
       <div className='flex justify-between items-center mb-3'>
-        <div className='font-bold text-2xl'>Complaint Information</div>
+        <div className='font-bold text-2xl'>Assign Complaint Information</div>
         <div onClick={handleAdd} className='flex bg-[#0284c7] hover:bg-[#5396b9] hover:text-black rounded-md p-2 cursor-pointer text-white justify-between items-center '>
           <Add style={{ color: "white" }} />
           <div className=' ml-2 '>Add Complaint</div>
         </div>
       </div>
-      {!data.length > 0 ? <div className='h-[400px] flex justify-center items-center'> <ReactLoader /></div>
+      {!data?.length > 0 ? <div className='h-[400px] flex justify-center items-center'> <ReactLoader /></div>
         :
         <>
           <TableContainer component={Paper}>
@@ -89,74 +89,29 @@ const ComplaintList = (props) => {
                 <TableRow>
                   <TableCell>
                     <TableSortLabel
-                      active={sortBy === '_id'}
+                      active={sortBy === 'id'}
                       direction={sortDirection}
-                      onClick={() => handleSort('_id')}
+                      onClick={() => handleSort('id')}
                     >
                       ID
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>
                     <TableSortLabel
-                      active={sortBy === 'customerName'}
+                      active={sortBy === 'name'}
                       direction={sortDirection}
-                      onClick={() => handleSort('customerName')}
+                      onClick={() => handleSort('name')}
                     >
-                      Customer Name
+                      Name
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>
                     <TableSortLabel
-                      active={sortBy === 'customerEmail'}
+                      active={sortBy === 'email'}
                       direction={sortDirection}
-                      onClick={() => handleSort('customerEmail')}
+                      onClick={() => handleSort('email')}
                     >
-                      Eustomer Email
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'city'}
-                      direction={sortDirection}
-                      onClick={() => handleSort('city')}
-                    >
-                     City
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'state'}
-                      direction={sortDirection}
-                      onClick={() => handleSort('state')}
-                    >
-                     State
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'customerMobile'}
-                      direction={sortDirection}
-                      onClick={() => handleSort('customerMobile')}
-                    >
-                     Contact No.
-                    </TableSortLabel>
-                  </TableCell> 
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'status'}
-                      direction={sortDirection}
-                      onClick={() => handleSort('status')}
-                    >
-                     Status
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'createdAt'}
-                      direction={sortDirection}
-                      onClick={() => handleSort('createdAt')}
-                    >
-                     Created_At
+                      Status
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>Actions</TableCell>
@@ -167,13 +122,8 @@ const ComplaintList = (props) => {
                 {sortedData.map((row) => (
                   <TableRow key={row?.i} hover>
                     <TableCell>{row?.i}</TableCell>
-                    <TableCell>{row?.customerName}</TableCell>
-                    <TableCell>{row?.customerEmail}</TableCell>
-                    <TableCell>{row?.city}</TableCell>
-                    <TableCell>{row?.state}</TableCell>
-                    <TableCell>{row?.customerMobile}</TableCell>
+                    <TableCell>{row?.name}</TableCell>
                     <TableCell>{row?.status}</TableCell>
-                    <TableCell>{new Date(row?.createdAt).toLocaleString()}</TableCell>
                     <TableCell>
                       <IconButton aria-label="view" onClick={() => handleDetails(row?._id)}>
                         <Visibility color='primary' />
@@ -207,16 +157,16 @@ const ComplaintList = (props) => {
   );
 };
 
-export default ComplaintList;
+export default AssignComplaintList;
 
 function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
+  const stabilizedThis = array?.map((el, index) => [el, index]);
+  stabilizedThis?.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis?.map((el) => el[0]);
 }
 
 function getComparator(order, orderBy) {
