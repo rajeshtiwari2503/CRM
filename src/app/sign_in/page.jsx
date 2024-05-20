@@ -64,11 +64,11 @@ export default function SignIn() {
   return (
     <>
       <Toaster />
-      <div className="flex justify-center mt-16">
-        <div style={{ minWidth: "30%" }}>
-          <div className="shadow-lg flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <div className="flex justify-center">
+      <div className="h-screen flex justify-center ">
+        <div style={{ minWidth: "30%" }} className="my-12">
+          <div className="shadow-lg flex bg-[#ade1e4] rounded-xl min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
+              <div className="flex justify-center ">
                 <InputIcon fontSize="large" />
               </div>
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

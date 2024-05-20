@@ -89,29 +89,74 @@ const ComplaintList = (props) => {
                 <TableRow>
                   <TableCell>
                     <TableSortLabel
-                      active={sortBy === 'id'}
+                      active={sortBy === '_id'}
                       direction={sortDirection}
-                      onClick={() => handleSort('id')}
+                      onClick={() => handleSort('_id')}
                     >
                       ID
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>
                     <TableSortLabel
-                      active={sortBy === 'name'}
+                      active={sortBy === 'customerName'}
                       direction={sortDirection}
-                      onClick={() => handleSort('name')}
+                      onClick={() => handleSort('customerName')}
                     >
-                      Name
+                      Customer Name
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>
                     <TableSortLabel
-                      active={sortBy === 'email'}
+                      active={sortBy === 'customerEmail'}
                       direction={sortDirection}
-                      onClick={() => handleSort('email')}
+                      onClick={() => handleSort('customerEmail')}
                     >
-                      Status
+                      Eustomer Email
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'city'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('city')}
+                    >
+                     City
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'state'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('state')}
+                    >
+                     State
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'customerMobile'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('customerMobile')}
+                    >
+                     Contact No.
+                    </TableSortLabel>
+                  </TableCell> 
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'status'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('status')}
+                    >
+                     Status
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'createdAt'}
+                      direction={sortDirection}
+                      onClick={() => handleSort('createdAt')}
+                    >
+                     Created_At
                     </TableSortLabel>
                   </TableCell>
                   <TableCell>Actions</TableCell>
@@ -122,8 +167,13 @@ const ComplaintList = (props) => {
                 {sortedData.map((row) => (
                   <TableRow key={row?.i} hover>
                     <TableCell>{row?.i}</TableCell>
-                    <TableCell>{row?.name}</TableCell>
+                    <TableCell>{row?.customerName}</TableCell>
+                    <TableCell>{row?.customerEmail}</TableCell>
+                    <TableCell>{row?.city}</TableCell>
+                    <TableCell>{row?.state}</TableCell>
+                    <TableCell>{row?.customerMobile}</TableCell>
                     <TableCell>{row?.status}</TableCell>
+                    <TableCell>{new Date(row?.createdAt).toLocaleString()}</TableCell>
                     <TableCell>
                       <IconButton aria-label="view" onClick={() => handleDetails(row?._id)}>
                         <Visibility color='primary' />
