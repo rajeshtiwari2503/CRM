@@ -394,14 +394,14 @@ function Sidenav(props) {
     </div>
   );
 
-  // Remove this const when copying and pasting into your project.
+  // Remove this const when copying and pasting into your project.ndbh
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="fixed"   
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
