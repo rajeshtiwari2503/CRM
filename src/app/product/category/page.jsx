@@ -11,7 +11,7 @@ const Category = () => {
     getAllCategories()
   }, [refresh])
 
-  const getAllCategories = async () => {
+  const getAllCategories = async() => {
     let response = await http_request.get("/getAllProductCategory")
     let { data } = response;
 
