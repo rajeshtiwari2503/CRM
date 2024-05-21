@@ -109,7 +109,7 @@ function Sidenav(props) {
     <div>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <div>
-          <img src={"/logo.png"} height={40} width={60} alt='logo' className='rounded-lg' />
+          <img src="/Logo.png" height={40} width={60} alt='logo' className='rounded-lg' />
         </div>
         <div className='font-bold text-xl'>
           {value?.user?.role}
