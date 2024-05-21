@@ -1,21 +1,11 @@
- 
-import SignIn from "./sign_in/page";
-import Sidenav from "./components/Sidenav";
-import Dashboard from "./dashboard/page";
+import HomePageCRM from "./components/common/HomePage";
  
  
-
- 
- 
- 
-
 export default function Home() {
   return (
     <main className="   ">
-      {/* <SignIn /> */}
-       
-     <Dashboard />
-    
+
+    <HomePageCRM />
     </main>
   )
 }
